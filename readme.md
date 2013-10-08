@@ -4,4 +4,4 @@ This plugin get markdown file on dropbox public link, convert markdown to html, 
 
     [mytory-md path=http://dl.dropboxusercontent.com/u/11111111/my-file.md]
 
-So, this shortcode will change to html content.
+So, this shortcode will change `my-file.md` to html content.
