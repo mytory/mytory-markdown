@@ -21,6 +21,8 @@ class Mytory_Markdown {
     public function apply_markdown( $attr ){
         global $post;
 
+        $attr['path'] = str_replace('https://', 'http://', $attr['path']);
+
         if($this->_need_to_save($attr['path'])){
             update_post_meta($post->ID, '_mytory_markdown_etag', $this->_get_etag($attr['path']));
             $md_content = $this->_file_get_contents($attr['path']);
