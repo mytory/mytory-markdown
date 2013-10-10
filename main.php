@@ -24,6 +24,7 @@ class Mytory_Markdown {
         $attr['path'] = str_replace('https://', 'http://', $attr['path']);
 
         if($this->_need_to_save($attr['path'])){
+
             update_post_meta($post->ID, '_mytory_markdown_etag', $this->_get_etag($attr['path']));
             $md_content = $this->_file_get_contents($attr['path']);
 
@@ -33,6 +34,7 @@ class Mytory_Markdown {
 
             $html_content = Markdown($md_content);
             $html_content = preg_replace('/<h1>(.*)<\/h1>/', '', $html_content);
+            $html_content = wptexturize($html_content);
             update_post_meta($post->ID, 'mytory_markdown_html', $html_content);
             return $html_content;
             
