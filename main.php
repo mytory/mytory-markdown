@@ -34,7 +34,12 @@ class Mytory_Markdown {
 
             $html_content = Markdown($md_content);
             $html_content = preg_replace('/<h1>(.*)<\/h1>/', '', $html_content);
-            $html_content = apply_filters('the_content', $html_content);
+            $html_content = wptexturize($html_content);
+            $html_content = convert_smilies($html_content);
+            $html_content = convert_chars($html_content);
+            $html_content = wpautop($html_content);
+            $html_content = shortcode_unautop($html_content);
+            $html_content = prepend_attachment($html_content);
             update_post_meta($post->ID, 'mytory_markdown_html', $html_content);
             return $html_content;
             
