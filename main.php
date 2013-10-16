@@ -37,7 +37,7 @@ class Mytory_Markdown {
             $html_content = wptexturize($html_content);
             $html_content = convert_smilies($html_content);
             $html_content = convert_chars($html_content);
-            $html_content = wpautop($html_content);
+            // $html_content = wpautop($html_content);
             $html_content = shortcode_unautop($html_content);
             $html_content = prepend_attachment($html_content);
             update_post_meta($post->ID, 'mytory_markdown_html', $html_content);
