@@ -9,6 +9,8 @@ Author URI: http://mytory.net
 
 class Mytory_Markdown {
 
+    var $file_not_found;
+
     function Mytory_Markdown(){
         add_shortcode( 'mytory-md', array(&$this, 'apply_markdown'));
     }
@@ -24,6 +26,10 @@ class Mytory_Markdown {
         $attr['path'] = str_replace('https://', 'http://', $attr['path']);
 
         if($this->_need_to_save($attr['path'])){
+
+            if($this->file_not_found === TRUE){
+                return "<p>Markdown file is not found.</p>";
+            }
 
             update_post_meta($post->ID, '_mytory_markdown_etag', $this->_get_etag($attr['path']));
             $md_content = $this->_file_get_contents($attr['path']);
@@ -56,11 +62,24 @@ class Mytory_Markdown {
      */
     private function _need_to_save($url){
         global $post;
+
+        // If not single page, don't connect for prevent time-wasting.
+        // return FALSE that means 'no need to save' to print HTML that is saved.
+        // 싱글 페이지가 아니라면 굳이 접속해서 시간낭비할 거 없이 
+        // 바로 저장된 HTML을 뿌려줄 수 있도록 save할 필요 없다고 신호를 준다.
+        if( ! is_single()){
+            return FALSE;
+        }
         
         $etag_saved = get_post_meta($post->ID, '_mytory_markdown_etag', true);
 
         if($etag_saved){
             $etag_remote = $this->_get_etag($url);
+
+            // if there is not etag, don't need to save.
+            if($etag_remote === NULL){
+                return false;
+            }
             
             // if etag different each other, need to save
             return ($etag_saved != $etag_remote);
@@ -78,7 +97,16 @@ class Mytory_Markdown {
     private function _get_etag($url){
         $header = $this->_get_header_from_url($url);
         $header = $this->_http_parse_headers($header);
-        return $header['etag'];
+
+        if($header[0] == 'HTTP/1.1 404 NOT FOUND'){
+            $this->file_not_found = TRUE;
+        }
+        
+        if(isset($header['etag'])){
+            return $header['etag'];
+        }else{
+            return NULL;
+        }
     }
 
     /**
