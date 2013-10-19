@@ -9,12 +9,18 @@ Author URI: http://mytory.net
 
 class Mytory_Markdown {
 
-    var $file_not_found;
+    var $error = array(
+        'status' => FALSE,
+        'msg' => '',
+    );
 
     function Mytory_Markdown() {
         add_filter('the_content', array(&$this, 'apply_markdown'));
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
         add_action('save_post', array(&$this, 'update_post'));
+
+        add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
+
     }
 
     /**
@@ -39,27 +45,71 @@ class Mytory_Markdown {
         if ($this->_need_to_save($markdown_path)) {
 
             update_post_meta($post->ID, '_mytory_markdown_etag', $this->_get_etag($markdown_path));
-            $md_content = $this->_file_get_contents($markdown_path);
+            $post_content = $this->_get_post_content($markdown_path);
 
-            if (!function_exists('Markdown')) {
-                include_once 'markdown.php';
+            if ($this->error['status'] === TRUE) {
+                if(current_user_can('edit_posts')){
+                    return "<p>{$this->error['msg']}</p>" . $post_content;
+                }else{
+                    return $post_content;
+                }
+            }else{
+                $postarr = array(
+                    'ID' => $post->ID,
+                    'post_content' => $post_content,
+                );
+                wp_update_post($postarr);
             }
-
-            $post_content = Markdown($md_content);
-            $post_content = preg_replace('/<h1>(.*)<\/h1>/', '', $post_content);
-
-            $postarr = array(
-                'ID' => $post->ID,
-                'post_content' => $post_content,
-            );
-            wp_update_post($postarr);
         }
 
-        if ($this->file_not_found === TRUE AND current_user_can('edit_posts')) {
-            return "<p>Markdown file is not found.</p>" . $post_content;
+        if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
+            return "<p>{$this->error['msg']}</p>" . $post_content;
         }
 
         return $post_content;
+    }
+
+    /**
+     * get html converted from markdown file path.
+     * if error occur, return false.
+     * @param $markdown_path
+     * @return boolean | string
+     */
+    private function _get_post_content($markdown_path){
+        $md_content = $this->_file_get_contents($markdown_path);
+
+        if($md_content === FALSE){
+            return FALSE;
+        }
+
+        if (!function_exists('Markdown')) {
+            include_once 'markdown.php';
+        }
+
+        $post_content = Markdown($md_content);
+        $post_content = preg_replace('/<h1>(.*)<\/h1>/', '', $post_content);
+
+        return $post_content;
+    }
+
+    public function get_post_content_ajax(){
+        $post_content = $this->_get_post_content($_REQUEST['md_path']);
+
+        if( ! $post_content){
+            $res = array(
+                'error' => TRUE,
+                'error_msg' => $this->error['msg'],
+                'post_content' => 'error',
+            );
+        }else{
+            $res = array(
+                'error' => FALSE,
+                'error_msg' => '',
+                'post_content' => $post_content,
+            );
+        }
+        echo json_encode($res);
+        die();
     }
 
     /**
@@ -106,10 +156,6 @@ class Mytory_Markdown {
         $header = $this->_get_header_from_url($url);
         $header = $this->_http_parse_headers($header);
 
-        if ($header[0] == 'HTTP/1.1 404 NOT FOUND') {
-            $this->file_not_found = TRUE;
-        }
-
         if (isset($header['etag'])) {
             return $header['etag'];
         } else {
@@ -129,8 +175,13 @@ class Mytory_Markdown {
         curl_setopt($curl, CURLOPT_NOBODY, TRUE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+        $header = curl_exec($curl);
 
-        return curl_exec($curl);
+        if( ! $this->_check_curl_error($curl)){
+            return FALSE;
+        }
+
+        return $header;
     }
 
     /**
@@ -144,8 +195,28 @@ class Mytory_Markdown {
         curl_setopt($curl, CURLOPT_HEADER, FALSE);
         curl_setopt($curl, CURLOPT_NOBODY, FALSE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+        $content = curl_exec($curl);
 
-        return curl_exec($curl);
+        if( ! $this->_check_curl_error($curl)){
+            return FALSE;
+        }
+
+        return $content;
+    }
+
+    private function _check_curl_error($curl){
+        $curl_info = curl_getinfo($curl);
+        if($curl_info['http_code'] != '200'){
+            $this->error = array(
+                'status' => TRUE,
+                'msg' => 'Network Error! HTTP STATUS is ' . $curl_info['http_code'],
+            );
+            if($curl_info['http_code'] == 0){
+                $this->error['msg'] = 'Network Error! Maybe, connection error.';
+            }
+            return FALSE;
+        }
+        return TRUE;
     }
 
     /**
@@ -206,19 +277,32 @@ class Mytory_Markdown {
                     <input type="url" name="mytory_md_path" id="mytory-md-path" class="large-text" value="<?php echo $markdown_path?>">
                 </td>
             </tr>
-            <!-- <tr>
-                <th>Function</th>
+            <tr>
+                <th><?_e('Update', 'mytory-markdown')?></th>
                 <td>
-                    <button type="button" class="js-update-content">Update Content</button>
+                    <button type="button" class="button js-update-content"><?_e('Update Editor', 'mytory-markdown')?></button>
                 </td>
-            </tr> -->
+            </tr>
         </table>
         <script type="text/javascript">
-            // jQuery(document).ready(function($){
-            //     $('.js-update-content').click(function(){
+            jQuery(document).ready(function($){
+                 $('.js-update-content').click(function(){
+                     $.get(wp.ajax.settings.url, {
+                         action: 'mytory_md_update_editor',
+                         md_path: $('#mytory-md-path').val()
+                     }, function(res){
+                         if(res.error){
+                             alert(res.error_msg);
+                         }else{
+                             var post_content = res.post_content;
 
-            //     });
-            // });
+                             // TODO 텍스트모드일 때 업데이트 안 됨.
+                             // 처음 나오는 h1은 제목 필드에 넣어 주자.
+                             tinymce.activeEditor.setContent(post_content);
+                         }
+                     }, 'json');
+                 });
+            });
         </script>
     <?
     }
@@ -233,6 +317,8 @@ class Mytory_Markdown {
             update_post_meta($post_id, 'mytory_md_path', $_POST['mytory_md_path']);
         }
     }
+
+
 }
 
 $mytory_markdown = new Mytory_Markdown;
