@@ -45,18 +45,19 @@ class Mytory_Markdown {
         if ($this->_need_to_save($markdown_path)) {
 
             update_post_meta($post->ID, '_mytory_markdown_etag', $this->_get_etag($markdown_path));
-            $post_content = $this->_get_post_content($markdown_path);
+            $md_post = $this->_get_post($markdown_path);
 
             if ($this->error['status'] === TRUE) {
                 if(current_user_can('edit_posts')){
-                    return "<p>{$this->error['msg']}</p>" . $post_content;
+                    return "<p>{$this->error['msg']}</p>" . $md_post['post_content'];
                 }else{
-                    return $post_content;
+                    return $md_post['post_content'];
                 }
             }else{
                 $postarr = array(
                     'ID' => $post->ID,
-                    'post_content' => $post_content,
+                    'post_title' => $md_post['post_title'],
+                    'post_content' => $md_post['post_content'],
                 );
                 wp_update_post($postarr);
             }
@@ -75,7 +76,7 @@ class Mytory_Markdown {
      * @param $markdown_path
      * @return boolean | string
      */
-    private function _get_post_content($markdown_path){
+    private function _get_post($markdown_path){
         $md_content = $this->_file_get_contents($markdown_path);
 
         if($md_content === FALSE){
@@ -86,26 +87,35 @@ class Mytory_Markdown {
             include_once 'markdown.php';
         }
 
-        $post_content = Markdown($md_content);
-        $post_content = preg_replace('/<h1>(.*)<\/h1>/', '', $post_content);
+        $content = Markdown($md_content);
+        $post = array();
+        preg_match('/<h1>(.*)<\/h1>/', $content, $matches);
+        if( ! empty($matches)){
+            $post['post_title'] = $matches[1];
+        }else{
+            $post['post_title'] = FALSE;
+        }
+        $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content);
 
-        return $post_content;
+        return $post;
     }
 
     public function get_post_content_ajax(){
-        $post_content = $this->_get_post_content($_REQUEST['md_path']);
+        $md_post = $this->_get_post($_REQUEST['md_path']);
 
-        if( ! $post_content){
+        if( ! $md_post){
             $res = array(
                 'error' => TRUE,
                 'error_msg' => $this->error['msg'],
+                'post_title' => 'error',
                 'post_content' => 'error',
             );
         }else{
             $res = array(
                 'error' => FALSE,
                 'error_msg' => '',
-                'post_content' => $post_content,
+                'post_title' => $md_post['post_title'],
+                'post_content' => $md_post['post_content'],
             );
         }
         echo json_encode($res);
@@ -294,11 +304,18 @@ class Mytory_Markdown {
                          if(res.error){
                              alert(res.error_msg);
                          }else{
-                             var post_content = res.post_content;
+                             if(res.post_title){
+                                 $('#title').val(res.post_title);
+                             }
+                             if($('#content').is(':visible')){
 
-                             // TODO 텍스트모드일 때 업데이트 안 됨.
-                             // 처음 나오는 h1은 제목 필드에 넣어 주자.
-                             tinymce.activeEditor.setContent(post_content);
+                                 // text mode
+                                 $('#content').val(res.post_content);
+                             }else{
+
+                                 // wysiwyg mode
+                                 tinymce.getInstanceById('content').setContent(res.post_content);
+                             }
                          }
                      }, 'json');
                  });
