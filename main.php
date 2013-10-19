@@ -101,6 +101,20 @@ class Mytory_Markdown {
     }
 
     public function get_post_content_ajax(){
+
+        $etag_new = $this->_get_etag($_REQUEST['md_path']);
+
+        if( ! $etag_new){
+            return array(
+                'error' => TRUE,
+                'error_msg' => $this->error['msg'],
+                'post_title' => 'error',
+                'post_content' => 'error',
+            );
+        }
+
+        update_post_meta($_REQUEST['post_id'], '_mytory_markdown_etag', $etag_new);
+
         $md_post = $this->_get_post($_REQUEST['md_path']);
 
         if( ! $md_post){
@@ -299,7 +313,8 @@ class Mytory_Markdown {
                  $('.js-update-content').click(function(){
                      $.get(wp.ajax.settings.url, {
                          action: 'mytory_md_update_editor',
-                         md_path: $('#mytory-md-path').val()
+                         md_path: $('#mytory-md-path').val(),
+                         post_id: $('#post_ID').val()
                      }, function(res){
                          if(res.error){
                              alert(res.error_msg);
