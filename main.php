@@ -311,7 +311,7 @@ class Mytory_Markdown {
             <tr>
                 <th><?php _e('Update', 'mytory-markdown')?></th>
                 <td>
-                    <button type="button" class="button js-update-content"><?php _e('Update Editor', 'mytory-markdown')?></button>
+                    <button type="button" class="button js-update-content"><?php _e('Update Editor Content', 'mytory-markdown')?></button>
                 </td>
             </tr>
         </table>
