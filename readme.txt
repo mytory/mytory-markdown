@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Mytory Markdown ===
 Contributors: mytory
 Donate link: http://mytory.net/paypal-donation
 Tags: markdown
