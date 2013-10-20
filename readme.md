@@ -11,6 +11,8 @@
 
 This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 
+You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
+
 ### Logic ###
 
 **On admin page**
