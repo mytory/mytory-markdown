@@ -1,15 +1,13 @@
 # Mytory Markdown
 
-This plugin get markdown file on dropbox public link, convert markdown to html, and print to post content. This use `shortcode`.
+This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 
-    [mytory-md path=http://dl.dropboxusercontent.com/u/11111111/my-file.md]
-
-So, this shortcode will change `my-file.md` to html content.
+![](animated.gif)
 
 ## Logic
 
-This plugin get dropbox md content. And save header's etag and converted html to postmeta. Next time on request same post, first this plugin olny get dropbox http etag. If changed etag, get dropbox md content, or get html from postmeta.
+This plugin get dropbox md content. And save header's etag to postmeta and converted html to post_content. Next time on request same post, first this plugin olny get dropbox http etag. If changed etag, get dropbox md content and save again, or get html from post_content.
 
-## This plugin remove `h1` from md file
+## This plugin divide title and content from md file.
 
-I think markdown document has to be self-contained. But Wordpress post has own title. If markdown document has title(`h1` mark, `#` or `====`), title appear twice on post. So, I write code remove all `h1` from md. You probably will use `h2` for strapline.
+If markdown file has `h1` this plugin puts first `h1` string to post_title. Of course, remove the `h1` from post_content so don't print title twice.

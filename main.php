@@ -3,7 +3,7 @@
 Plugin Name: Mytory Markdown
 Description: Markdown edit using Dropbox public link. Only support file url in current version.
 Author: mytory
-Version: 0.9
+Version: 1.1
 Author URI: http://mytory.net
 */
 
