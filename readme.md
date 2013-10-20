@@ -11,6 +11,10 @@
 
 This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 
+**[View intro video.](http://youtu.be/mCgzB1aCQgM)**
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/mCgzB1aCQgM" frameborder="0" allowfullscreen></iframe>
+
 You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
 
 ### Logic ###
