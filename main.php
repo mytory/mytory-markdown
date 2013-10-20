@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Mytory Markdown
-Description: Markdown edit using Dropbox public link. Only support file url in current version.
+Description: This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 Author: mytory
 Version: 1.1
 Author URI: http://mytory.net
