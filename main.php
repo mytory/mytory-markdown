@@ -14,8 +14,10 @@ class Mytory_Markdown {
         'msg' => '',
     );
 
+    var $post;
+
     function Mytory_Markdown() {
-        add_filter('the_content', array(&$this, 'apply_markdown'));
+        add_action('pre_get_posts', array(&$this, 'apply_markdown'));
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
         add_action('save_post', array(&$this, 'update_post'));
 
@@ -24,31 +26,33 @@ class Mytory_Markdown {
     }
 
     /**
-     * apply markdown
-     * @param  array $attr shortcod attributes
-     * @return string contents markdown apply
+     * apply markdown on pre_get_posts
      */
-    public function apply_markdown($post_content, $post_id = NULL) {
-        global $post;
+    public function apply_markdown($query) {
+
+        if($query->query_vars['p']){
+            $this->post = get_post($query->query_vars['p']);
+        }else if($query->query_vars['pagename']){
+            $posts = get_posts(array('post_type' => 'any','name' => $query->query_vars['pagename']));
+            $this->post = $posts[0];
+        }else{
+            return;
+        }
 
         if( ! is_single()){
-            return $post_content;
+            return;
         }
 
-        if($post_id){
-            $post = get_post($post_id);
-        }
-
-        $markdown_path = get_post_meta($post->ID, 'mytory_md_path', TRUE);
+        $markdown_path = get_post_meta($this->post->ID, 'mytory_md_path', TRUE);
 
         if( ! $markdown_path){
-            return $post_content;
+            return;
         }
         $markdown_path = str_replace('https://', 'http://', $markdown_path);
 
         if ($this->_need_to_save($markdown_path)) {
 
-            update_post_meta($post->ID, '_mytory_markdown_etag', $this->_get_etag($markdown_path));
+            update_post_meta($this->post->ID, '_mytory_markdown_etag', $this->_get_etag($markdown_path));
             $md_post = $this->_get_post($markdown_path);
 
             if ($this->error['status'] === TRUE) {
@@ -59,7 +63,7 @@ class Mytory_Markdown {
                 }
             }else{
                 $postarr = array(
-                    'ID' => $post->ID,
+                    'ID' => $this->post->ID,
                     'post_title' => $md_post['post_title'],
                     'post_content' => $md_post['post_content'],
                 );
@@ -67,11 +71,10 @@ class Mytory_Markdown {
             }
         }
 
-        if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
-            return "<p>{$this->error['msg']}</p>" . $post_content;
-        }
-
-        return $post_content;
+//      함수로 빼서 the_content filter를 만들어야겠다.
+//        if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
+//            $post->post_content =  "<p>{$this->error['msg']}</p>" . $post->post_content;
+//        }
     }
 
     /**
@@ -147,7 +150,7 @@ class Mytory_Markdown {
      * @return boolean
      */
     private function _need_to_save($url) {
-        global $post;
+        $post = $this->post;
 
         // If not single page, don't connect for prevent time-wasting.
         // return FALSE that means 'no need to save' to print HTML that is saved.
