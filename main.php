@@ -20,9 +20,8 @@ class Mytory_Markdown {
         add_action('pre_get_posts', array(&$this, 'apply_markdown'));
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
         add_action('save_post', array(&$this, 'update_post'));
-
         add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
-
+        add_filter('the_content', array(&$this, 'attach_error_msg'));
     }
 
     /**
@@ -70,11 +69,18 @@ class Mytory_Markdown {
                 wp_update_post($postarr);
             }
         }
+    }
 
-//      함수로 빼서 the_content filter를 만들어야겠다.
-//        if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
-//            $post->post_content =  "<p>{$this->error['msg']}</p>" . $post->post_content;
-//        }
+    /**
+     * if error occurred, attach error message to post content.
+     * @param $post_content
+     * @return string
+     */
+    public function attach_error_msg($post_content){
+        if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
+            $post_content =  "<p>{$this->error['msg']}</p>" . $post_content;
+        }
+        return $post_content;
     }
 
     /**
@@ -242,6 +248,9 @@ class Mytory_Markdown {
                 'status' => TRUE,
                 'msg' => 'Network Error! HTTP STATUS is ' . $curl_info['http_code'],
             );
+            if($curl_info['http_code'] == '404'){
+                $this->error['msg'] = 'Network Error! File not found.';
+            }
             if($curl_info['http_code'] == 0){
                 $this->error['msg'] = 'Network Error! Maybe, connection error.';
             }
