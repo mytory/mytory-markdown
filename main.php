@@ -40,6 +40,10 @@ class Mytory_Markdown {
         }
 
         $markdown_path = get_post_meta($post->ID, 'mytory_md_path', TRUE);
+
+        if( ! $markdown_path){
+            return $post_content;
+        }
         $markdown_path = str_replace('https://', 'http://', $markdown_path);
 
         if ($this->_need_to_save($markdown_path)) {
@@ -292,7 +296,10 @@ class Mytory_Markdown {
     }
 
     function meta_box_inner() {
-        $markdown_path = get_post_meta($_GET['post'], 'mytory_md_path', TRUE);
+        $markdown_path = '';
+        if(isset($_GET['post'])){
+            $markdown_path = get_post_meta($_GET['post'], 'mytory_md_path', TRUE);
+        }
         ?>
         <table class="form-table">
             <tr>
@@ -302,9 +309,9 @@ class Mytory_Markdown {
                 </td>
             </tr>
             <tr>
-                <th><?_e('Update', 'mytory-markdown')?></th>
+                <th><?php _e('Update', 'mytory-markdown')?></th>
                 <td>
-                    <button type="button" class="button js-update-content"><?_e('Update Editor', 'mytory-markdown')?></button>
+                    <button type="button" class="button js-update-content"><?php _e('Update Editor', 'mytory-markdown')?></button>
                 </td>
             </tr>
         </table>
@@ -336,7 +343,7 @@ class Mytory_Markdown {
                  });
             });
         </script>
-    <?
+    <?php
     }
 
     function update_post($post_id) {
