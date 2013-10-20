@@ -9,13 +9,18 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
+= Feature =
 
 **[View intro video.](http://youtu.be/mCgzB1aCQgM)**
 
 <iframe width="420" height="315" src="//www.youtube.com/embed/mCgzB1aCQgM" frameborder="0" allowfullscreen></iframe>
 
-You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
+* This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
+* You can update post **by editing file on your computer with dropbox sync function.** Of course, that's ok even if content editor is empty, when you write new post. If you have entered markdown file's URL, plugin will take care of.
+* If post was updated once, plugin check only URL server's ETAG not full content. It is for speed. If ETAG was changed, plugin get new content and update post content. Or do nothing.
+* Plugin use WordPress's `wp_update_post()` function. So revision history is preserved.
+* Plugin's compatibility is good. Because this plugin updates only post content html. This doesn't touch `the_content` process(vary plugins touch the process).
+* You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
 
 = Logic =
 
