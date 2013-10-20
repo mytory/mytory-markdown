@@ -9,7 +9,7 @@
 
 ## Description ##
 
-### Feature ###
+### Features ###
 
 **[View intro video.](http://youtu.be/mCgzB1aCQgM)**
 
