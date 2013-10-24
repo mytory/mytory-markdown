@@ -118,12 +118,14 @@ class Mytory_Markdown {
         $etag_new = $this->_get_etag($_REQUEST['md_path']);
 
         if( ! $etag_new){
-            return array(
+            $res = array(
                 'error' => TRUE,
                 'error_msg' => $this->error['msg'],
                 'post_title' => 'error',
                 'post_content' => 'error',
             );
+            echo json_encode($res);
+            die();
         }
 
         update_post_meta($_REQUEST['post_id'], '_mytory_markdown_etag', $etag_new);
@@ -249,7 +251,7 @@ class Mytory_Markdown {
                 'msg' => 'Network Error! HTTP STATUS is ' . $curl_info['http_code'],
             );
             if($curl_info['http_code'] == '404'){
-                $this->error['msg'] = 'Network Error! File not found.';
+                $this->error['msg'] = 'Incorrect URL. File not found.';
             }
             if($curl_info['http_code'] == 0){
                 $this->error['msg'] = 'Network Error! Maybe, connection error.';
@@ -337,6 +339,7 @@ class Mytory_Markdown {
                      }, function(res){
                          if(res.error){
                              alert(res.error_msg);
+                             return false;
                          }else{
                              if(res.post_title){
                                  $('#title').val(res.post_title);
