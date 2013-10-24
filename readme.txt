@@ -24,13 +24,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 = Logic =
 
-**On admin page**
+#### On admin page ####
 
 On admin write page, put markdown url path. And click 'update editor' button. So markdown content converted to html is putted to editor.
 
-![](animated.gif)
+![](http://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/animated.gif)
 
-**On view page**
+#### On view page ####
 
 This plugin get file url(Dropbox public link is recommended). And save header's etag to postmeta and converted html to post_content. Next time on request same post, first this plugin olny get dropbox http etag. If changed etag, get dropbox md content and save again, or get html from post_content.
 
