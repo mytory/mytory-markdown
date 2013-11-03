@@ -3,7 +3,7 @@
 **Donate link:** http://mytory.net/paypal-donation  
 **Tags:** markdown  
 **Tested up to:** 3.7.1  
-**Stable tag:** 1.2  
+**Stable tag:** 1.2.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -44,6 +44,10 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 ## Changelog ##
+
+### 1.2.1 ###
+
+Disabled 'markdown extra' plugin affect post content filter. This plugin was included in markdown php library file. I didn't know.
 
 ### 1.2 ###
 
