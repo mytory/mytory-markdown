@@ -3,7 +3,7 @@
 **Donate link:** http://mytory.net/paypal-donation  
 **Tags:** markdown  
 **Tested up to:** 3.6.1  
-**Stable tag:** 1.1  
+**Stable tag:** 1.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -13,7 +13,7 @@
 
 **[View intro video.](http://youtu.be/mCgzB1aCQgM)**
 
-<iframe width="420" height="315" src="//www.youtube.com/embed/mCgzB1aCQgM" frameborder="0" allowfullscreen></iframe>
+[youtube http://www.youtube.com/watch?v=mCgzB1aCQgM]
 
 * This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 * You can update post **by editing file on your computer with dropbox sync function.** Of course, that's ok even if content editor is empty, when you write new post. If you have entered markdown file's URL, plugin will take care of.
@@ -44,6 +44,10 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 ## Changelog ##
+
+### 1.2 ###
+
+Updated error handling.
 
 ### 1.1 ###
 
