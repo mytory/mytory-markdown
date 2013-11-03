@@ -115,6 +115,9 @@ class Mytory_Markdown {
 
     public function get_post_content_ajax(){
 
+        ini_set('display_errors', 1);
+        error_reporting(E_ERROR | E_WARNING);
+
         $etag_new = $this->_get_etag($_REQUEST['md_path']);
 
         if( ! $etag_new){
@@ -208,6 +211,13 @@ class Mytory_Markdown {
      * @return string
      */
     private function _get_header_from_url($url) {
+        if( ! function_exists('curl_init') ){
+            $this->error = array(
+                'status' => TRUE,
+                'msg' => 'Mytory Markdown plugin need PHP cURL module. But, your Server has not the module. So you cannot use this plugin. I\'m Sorry. If you can, request to install cURL module to your hosting service. Common hosting service provides cURL module.',
+            );
+            return FALSE;
+        }
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, TRUE);
@@ -332,30 +342,48 @@ class Mytory_Markdown {
         <script type="text/javascript">
             jQuery(document).ready(function($){
                  $('.js-update-content').click(function(){
-                     $.get(wp.ajax.settings.url, {
-                         action: 'mytory_md_update_editor',
-                         md_path: $('#mytory-md-path').val(),
-                         post_id: $('#post_ID').val()
-                     }, function(res){
-                         if(res.error){
-                             alert(res.error_msg);
-                             return false;
-                         }else{
-                             if(res.post_title){
-                                 $('#title').val(res.post_title);
-                             }
-                             if($('#content').is(':visible')){
 
-                                 // text mode
-                                 $('#content').val(res.post_content);
-                             }else{
+                    var md_path = $.trim($('#mytory-md-path').val());
+                    if( ! md_path){
+                        alert('Please fill the markdown file URL.');
+                        $('#mytory-md-path').focus();
+                        return false;
+                    }
 
-                                 // wysiwyg mode
-                                 tinymce.getInstanceById('content').setContent(res.post_content);
-                             }
-                         }
-                     }, 'json');
-                 });
+                    var ajax_result = $.get(wp.ajax.settings.url, {
+                        action: 'mytory_md_update_editor',
+                        md_path: $('#mytory-md-path').val(),
+                        post_id: $('#post_ID').val()
+                    }, function(res){
+
+                        if(res.error){
+                            alert(res.error_msg);
+                            return false;
+                        }else{
+                            if(res.post_title){
+                                $('#title').val(res.post_title);
+                            }
+                            if($('#content').is(':visible')){
+
+                                // text mode
+                                $('#content').val(res.post_content);
+                            }else{
+
+                                // wysiwyg mode
+                                tinymce.getInstanceById('content').setContent(res.post_content);
+                            }
+                        }
+                    }, 'json');
+
+                    ajax_result.fail(function(){
+                        $('#mytory-md-path').after($('<textarea />', {
+                            'html': ajax_result.responseText,
+                            'class': 'large-text',
+                            'style': 'height: 100px'
+                        }));
+                        alert('Unknown error. Please copy error text on textarea bottom of markdown plugin url input element and send to me(mytory@gmail.com). So, I can recognize the reason for the error.');
+                    });
+                });
             });
         </script>
     <?php
