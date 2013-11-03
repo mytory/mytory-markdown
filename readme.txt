@@ -13,7 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 **[View intro video.](http://youtu.be/mCgzB1aCQgM)**
 
-<iframe width="420" height="315" src="//www.youtube.com/embed/mCgzB1aCQgM" frameborder="0" allowfullscreen></iframe>
+[youtube http://www.youtube.com/watch?v=mCgzB1aCQgM]
 
 * This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 * You can update post **by editing file on your computer with dropbox sync function.** Of course, that's ok even if content editor is empty, when you write new post. If you have entered markdown file's URL, plugin will take care of.
