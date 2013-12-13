@@ -33,7 +33,11 @@ class Mytory_Markdown {
             $this->post = get_post($query->query_vars['p']);
         }else if($query->query_vars['pagename']){
             $posts = get_posts(array('post_type' => 'any','name' => $query->query_vars['pagename']));
-            $this->post = $posts[0];
+            if(isset($posts[0])){
+                $this->post = $posts[0];    
+            }else{
+                return;
+            }
         }else{
             return;
         }
