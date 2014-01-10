@@ -18,16 +18,20 @@ class Mytory_Markdown {
 
     function Mytory_Markdown() {
         add_action('pre_get_posts', array(&$this, 'apply_markdown'));
+        add_filter('the_content', array(&$this, 'attach_error_msg'));
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
         add_action('save_post', array(&$this, 'update_post'));
         add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
-        add_filter('the_content', array(&$this, 'attach_error_msg'));
     }
 
     /**
      * apply markdown on pre_get_posts
      */
     public function apply_markdown($query) {
+
+        if( ! current_user_can('edit_posts')){
+            return;
+        }
 
         if($query->query_vars['p']){
             $this->post = get_post($query->query_vars['p']);
