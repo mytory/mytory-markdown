@@ -22,6 +22,8 @@ class Mytory_Markdown {
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
         add_action('save_post', array(&$this, 'update_post'));
         add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
+        add_action('admin_menu', array(&$this, 'add_menu'));
+        add_action('admin_init', array(&$this, 'register_settings'));
     }
 
     /**
@@ -29,7 +31,7 @@ class Mytory_Markdown {
      */
     public function apply_markdown($query) {
 
-        if( ! current_user_can('edit_posts')){
+        if(get_option('auto_update_only_writer_visits') == 'y' AND ! current_user_can('edit_posts')){
             return;
         }
 
@@ -408,7 +410,25 @@ class Mytory_Markdown {
         }
     }
 
+    function register_settings() { // whitelist options
+        if ( ! current_user_can('activate_plugins') ){
+            return;
+        }
+        register_setting( 'mytory-markdown-option-group', 'auto_update_only_writer_visits' );
+        register_setting( 'mytory-markdown-option-group', 'check_update_per_visits' );
+    }
 
+    function add_menu() {
+        if ( ! current_user_can('activate_plugins') ){
+            return;
+        }
+        add_submenu_page('options-general.php', 'Mytory Markdown Setting', 'Mytory Markdown', 'activate_plugins', 'mytory-markdown', 
+                array(&$this, 'print_setting_page'));
+    }
+
+    function print_setting_page(){
+        include "setting.php";
+    }
 }
 
 $mytory_markdown = new Mytory_Markdown;
