@@ -360,6 +360,10 @@ class Mytory_Markdown {
                         return false;
                     }
 
+                    if(/dl\.dropboxusercontent\.com/.test(md_path) == false){
+                        alert("URL is not dropbox public link. If you copy share URL, it's mistake. You have to copy public URL from file in Public (and its child) folder.");
+                    }
+
                     var ajax_result = $.get(wp.ajax.settings.url, {
                         action: 'mytory_md_update_editor',
                         md_path: $('#mytory-md-path').val(),
