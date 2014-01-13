@@ -353,7 +353,7 @@ class Mytory_Markdown {
             return;
         }
         register_setting( 'mytory-markdown-option-group', 'auto_update_only_writer_visits' );
-        register_setting( 'mytory-markdown-option-group', 'check_update_per_visits' );
+        register_setting( 'mytory-markdown-option-group', 'auto_update_per' );
     }
 
     function add_menu() {
