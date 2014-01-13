@@ -46,6 +46,7 @@
             </td>
         </tr> -->
     </table>
+    <p><a href="http://wordpress.org/support/view/plugin-reviews/mytory-markdown">If you like this plugin, please rate on wordpress plugin site.</a></p>
 
     <?php
     submit_button();
