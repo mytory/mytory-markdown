@@ -24,6 +24,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 = Logic =
 
+#### You have to enable dropbox 'Public Folder' ####
+
+This plugin use dropbox 'Public link'. If you register dropbox account after December 6, 2012 you don't have Public folder. Then, [visit this page to 'enable public folder'](https://www.dropbox.com/enable_public_folder).
+
 #### On admin page ####
 
 On admin write page, put markdown url path. And click 'update editor' button. So markdown content converted to html is putted to editor.
