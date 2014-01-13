@@ -382,7 +382,7 @@ class Mytory_Markdown {
                             return false;
                         }else{
                             if(res.post_title){
-                                $('#title').val(res.post_title);
+                                $('#title').val(res.post_title).focus().blur();
                             }
                             if($('#content').is(':visible')){
 
