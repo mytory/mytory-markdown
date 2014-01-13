@@ -340,6 +340,11 @@ class Mytory_Markdown {
                 <th scope="row">URL</th>
                 <td>
                     <input type="url" name="mytory_md_path" id="mytory-md-path" class="large-text" value="<?php echo $markdown_path?>">
+                    <p class="js-dropbox-public-link-alert description" style="display: none">
+                        URL may not be dropbox 'public link'. If you copy 'share link', it will not work.
+                        You have to copy 'public link' from file in Public (or its child) folder. 
+                        If you don't have Public folder, <a href="https://www.dropbox.com/enable_public_folder">please enable public folder with this link.</a>
+                    </p>
                 </td>
             </tr>
             <tr>
@@ -361,7 +366,9 @@ class Mytory_Markdown {
                     }
 
                     if(/dl\.dropboxusercontent\.com/.test(md_path) == false){
-                        alert("URL is not dropbox public link. If you copy share URL, it's mistake. You have to copy public URL from file in Public (and its child) folder.");
+                        $('.js-dropbox-public-link-alert').show();
+                    }else{
+                        $('.js-dropbox-public-link-alert').hide();
                     }
 
                     var ajax_result = $.get(wp.ajax.settings.url, {
