@@ -15,6 +15,7 @@ class Mytory_Markdown {
     );
 
     var $post;
+    var $worked;
 
     function Mytory_Markdown() {
         add_action('pre_get_posts', array(&$this, 'apply_markdown'));
@@ -31,7 +32,14 @@ class Mytory_Markdown {
      */
     public function apply_markdown($query) {
 
-        if(get_option('auto_update_only_writer_visits') == 'y' AND ! current_user_can('edit_posts')){
+        if($this->worked == true){
+            return;
+        }
+        $this->worked = true;
+
+        $auto_update_only_writer_visits = get_option('auto_update_only_writer_visits');
+
+        if($auto_update_only_writer_visits == 'y' AND ! current_user_can('edit_posts')){
             return;
         }
 
@@ -50,6 +58,21 @@ class Mytory_Markdown {
 
         if( ! is_single()){
             return;
+        }
+
+        // 'Auto update per x visits' feature work only when 'Auto update only writer visits' feature disabled.
+        if($auto_update_only_writer_visits != 'y'){
+
+            // Auto update per x visits.
+            $auto_update_per = get_option('auto_update_per');
+            if($auto_update_per !== FALSE){
+                $visits_count = get_post_meta($this->post->ID, 'mytory_md_visits_count', TRUE);
+                update_post_meta( $this->post->ID, 'mytory_md_visits_count', $visits_count + 1);
+                $visits_count++;
+                if($visits_count % $auto_update_per !== 0){
+                    return;
+                }
+            }
         }
 
         $markdown_path = get_post_meta($this->post->ID, 'mytory_md_path', TRUE);
