@@ -19,7 +19,7 @@
         }
         ?>
         <tr valign="top">
-            <th scope="row"><?php _e('Auto update only when writer visits', 'mytory-markdown')?></th>
+            <th scope="row"><?php _e('Auto update only when writer (or admin) visits', 'mytory-markdown')?></th>
             <td>
                 <label>
                     <input type="radio" name="auto_update_only_writer_visits" value="y" <?php echo $checked['Y'] ?> /> Y
