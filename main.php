@@ -16,6 +16,7 @@ class Mytory_Markdown {
 
     var $post;
     var $worked;
+    var $debug_msg = array();
 
     function Mytory_Markdown() {
         add_action('pre_get_posts', array(&$this, 'apply_markdown'));
@@ -40,23 +41,36 @@ class Mytory_Markdown {
         $auto_update_only_writer_visits = get_option('auto_update_only_writer_visits');
 
         if($auto_update_only_writer_visits == 'y' AND ! current_user_can('edit_posts')){
+            $this->debug_msg[] = "Auto update only writer or admin visits is Y and current user can't edit posts. So don't work.";
             return;
         }
 
         if($query->query_vars['p']){
+            // post인 경우
             $this->post = get_post($query->query_vars['p']);
+            $this->debug_msg[] = "This is post.";
+
         }else if($query->query_vars['pagename']){
+            // page인 경우
             $posts = get_posts(array('post_type' => 'any','name' => $query->query_vars['pagename']));
+            $this->debug_msg[] = "This is page. Continue.";
+
             if(isset($posts[0])){
-                $this->post = $posts[0];    
+                $this->post = $posts[0];
             }else{
+                $this->debug_msg[] = "This don't has post_id. So don't work.";
                 return;
             }
+
         }else{
+            // post도 page도 아닌 경우
+            $this->debug_msg[] = "This is not post/page. So don't work.";
             return;
         }
 
         if( ! is_single()){
+            // single이 아닌 경우
+            $this->debug_msg[] = "This is not single page. So don't work.";
             return;
         }
 
@@ -65,11 +79,15 @@ class Mytory_Markdown {
 
             // Auto update per x visits.
             $auto_update_per = get_option('auto_update_per');
-            if($auto_update_per !== FALSE){
+            if( $auto_update_per !== FALSE ){
                 $visits_count = get_post_meta($this->post->ID, 'mytory_md_visits_count', TRUE);
+                if( ! $visits_count){
+                    $visits_count = 0;
+                }
                 update_post_meta( $this->post->ID, 'mytory_md_visits_count', $visits_count + 1);
                 $visits_count++;
                 if($visits_count % $auto_update_per !== 0){
+                    $this->debug_msg[] = "'Auto update per' option is enabled. And count is not full. So don't work.";
                     return;
                 }
             }
@@ -78,6 +96,7 @@ class Mytory_Markdown {
         $markdown_path = get_post_meta($this->post->ID, 'mytory_md_path', TRUE);
 
         if( ! $markdown_path){
+            $this->debug_msg[] = "This don't has markdown path. So don't work.";
             return;
         }
         $markdown_path = str_replace('https://', 'http://', $markdown_path);
@@ -101,6 +120,8 @@ class Mytory_Markdown {
                 );
                 wp_update_post($postarr);
             }
+        }else{
+            $this->debug_msg[] = "Etag was not changed. So content has not been updated.";
         }
     }
 
@@ -113,6 +134,15 @@ class Mytory_Markdown {
         if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
             $post_content =  "<p>{$this->error['msg']}</p>" . $post_content;
         }
+        if ( ! empty($this->debug_msg) AND current_user_can('edit_posts')){
+            $debug = '<ul>';
+            foreach ($this->debug_msg as $msg) {
+                $debug .= "<li>debug: {$msg}</li>";
+            }
+            $debug .= "</ul>";
+            $post_content = $debug . $post_content;
+        }
+
         return $post_content;
     }
 
