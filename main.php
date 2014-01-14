@@ -45,20 +45,27 @@ class Mytory_Markdown {
             return;
         }
 
+        // ob_start();
+        // var_dump($query->query_vars);
+        // $this->debug_msg[] = ob_get_contents();
+        // ob_end_clean();
+
         if($query->query_vars['p']){
             // post인 경우
             $this->post = get_post($query->query_vars['p']);
             $this->debug_msg[] = "This is post.";
 
-        }else if($query->query_vars['pagename']){
-            // page인 경우
-            $posts = get_posts(array('post_type' => 'any','name' => $query->query_vars['pagename']));
-            $this->debug_msg[] = "This is page. Continue.";
+        }else if($query->query_vars['pagename'] OR $query->query_vars['name']){
+            
+            // page인 경우 OR slug 형태 주소인 경우.
+            $slug = ($query->query_vars['pagename'] ? $query->query_vars['pagename'] : $query->query_vars['name']);
+            $posts = get_posts(array('post_type' => 'any','name' => $slug));
+            $this->debug_msg[] = "This is page or slug type permalink. Continue.";
 
             if(isset($posts[0])){
                 $this->post = $posts[0];
             }else{
-                $this->debug_msg[] = "This don't has post_id. So don't work.";
+                $this->debug_msg[] = "There is not post/page that has slug '{$slug}'. So don't work.";
                 return;
             }
 
