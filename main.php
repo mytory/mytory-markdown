@@ -45,15 +45,20 @@ class Mytory_Markdown {
             return;
         }
 
-        // ob_start();
-        // var_dump($query->query_vars);
-        // $this->debug_msg[] = ob_get_contents();
-        // ob_end_clean();
+        ob_start();
+        var_dump($query->query_vars);
+        $this->debug_msg[] = ob_get_contents();
+        ob_end_clean();
 
         if($query->query_vars['p']){
             // post인 경우
             $this->post = get_post($query->query_vars['p']);
             $this->debug_msg[] = "This is post.";
+
+        }else if($query->query_vars['page_id']){
+            // page인 경우
+            $this->post = get_post($query->query_vars['page_id']);
+            $this->debug_msg[] = "This is page.";
 
         }else if($query->query_vars['pagename'] OR $query->query_vars['name']){
             
@@ -75,7 +80,7 @@ class Mytory_Markdown {
             return;
         }
 
-        if( ! is_single()){
+        if( ! is_single() and ! is_page()){
             // single이 아닌 경우
             $this->debug_msg[] = "This is not single page. So don't work.";
             return;
@@ -188,7 +193,9 @@ class Mytory_Markdown {
         ini_set('display_errors', 1);
         error_reporting(E_ERROR | E_WARNING);
 
-        $etag_new = $this->_get_etag($_REQUEST['md_path']);
+        $md_path = str_replace('https://', 'http://', $_REQUEST['md_path']);
+
+        $etag_new = $this->_get_etag($md_path);
 
         if( ! $etag_new){
             $res = array(
@@ -203,7 +210,7 @@ class Mytory_Markdown {
 
         update_post_meta($_REQUEST['post_id'], '_mytory_markdown_etag', $etag_new);
 
-        $md_post = $this->_get_post($_REQUEST['md_path']);
+        $md_post = $this->_get_post($md_path);
 
         if( ! $md_post){
             $res = array(
