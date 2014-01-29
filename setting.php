@@ -48,6 +48,27 @@
                 </p>
             </td>
         </tr>
+        <?php
+        $debug_msg = get_option('debug_msg');
+        if(empty($debug_msg)){
+            $debug_msg = 'no';
+        }
+        ?>
+        <tr valign="top">
+            <th scope="row"><?php _e('Print Debug Message on post/page', 'mytory-markdown')?></th>
+            <td>
+                <label>
+                    <input type="radio" name="debug_msg" id="debug_msg_yes" value="yes"
+                        <?php echo ($debug_msg == 'yes' ? 'checked' : '')?>>
+                    yes
+                </label>
+                <label>
+                    <input type="radio" name="debug_msg" id="debug_msg_no" value="no"
+                        <?php echo ($debug_msg == 'no' ? 'checked' : '')?>>
+                    no
+                </label>
+            </td>
+        </tr>
     </table>
     <p><a href="http://wordpress.org/support/view/plugin-reviews/mytory-markdown">If you like this plugin, please rate on wordpress plugin site.</a></p>
 

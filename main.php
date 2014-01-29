@@ -421,6 +421,7 @@ class Mytory_Markdown {
         }
         register_setting( 'mytory-markdown-option-group', 'auto_update_only_writer_visits' );
         register_setting( 'mytory-markdown-option-group', 'auto_update_per' );
+        register_setting( 'mytory-markdown-option-group', 'debug_msg' );
     }
 
     function add_menu() {
