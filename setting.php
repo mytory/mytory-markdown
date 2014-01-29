@@ -67,6 +67,7 @@
                         <?php echo ($debug_msg == 'no' ? 'checked' : '')?>>
                     no
                 </label>
+                <p class="description"><?php _e("Of course, it doesn't be showed normal users.", 'mytory-markdown') ?></p>
             </td>
         </tr>
     </table>
