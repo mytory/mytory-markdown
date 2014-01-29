@@ -49,6 +49,11 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 == Changelog ==
 
+= 1.3.1 =
+
+* Fixed bug that plugin don't work on default permalink type page.
+* Added 'debug message on post/page' feature. You can switch on debug message on setting page.
+
 = 1.3 =
 
 * Added 'auto update per x visits' feature.
