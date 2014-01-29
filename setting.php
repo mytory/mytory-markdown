@@ -28,7 +28,7 @@
                     <input type="radio" name="auto_update_only_writer_visits" value="n" <?php echo $checked['N'] ?> /> N
                 </label>
                 <p class="description">
-                    This feature is for site traffic.
+                    <?php _e('This feature is for site traffic.', 'mytory-markdown') ?>
                 </p>
             </td>
         </tr>
@@ -44,7 +44,7 @@
             <td>
                 <input class="small-text" type="number" name="auto_update_per" value="<?php echo $auto_update_per ?>" />
                 <p class="description">
-                    This feature is for site traffic, too. If you check y to above 'auto update only when writer (or admin) visits', this feature don't be applied.
+                    <?php _e("This feature is for site traffic, too. If you check y to above 'auto update only when writer (or admin) visits', this feature don't be applied.", 'mytory-markdown'); ?>
                 </p>
             </td>
         </tr>

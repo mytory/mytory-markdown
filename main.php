@@ -19,6 +19,7 @@ class Mytory_Markdown {
     var $debug_msg = array();
 
     function Mytory_Markdown() {
+        add_action('plugins_loaded', array(&$this, 'plugin_init'));
         add_action('pre_get_posts', array(&$this, 'apply_markdown'));
         add_filter('the_content', array(&$this, 'attach_error_msg'));
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
@@ -26,6 +27,10 @@ class Mytory_Markdown {
         add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
         add_action('admin_menu', array(&$this, 'add_menu'));
         add_action('admin_init', array(&$this, 'register_settings'));
+    }
+
+    function plugin_init() {
+        load_plugin_textdomain('mytory-markdown', false, dirname(plugin_basename( __FILE__ )) .'/lang' ); 
     }
 
     /**
@@ -335,13 +340,13 @@ class Mytory_Markdown {
         if($curl_info['http_code'] != '200'){
             $this->error = array(
                 'status' => TRUE,
-                'msg' => 'Network Error! HTTP STATUS is ' . $curl_info['http_code'],
+                'msg' => __('Network Error! HTTP STATUS is ', 'mytory-markdown') . $curl_info['http_code'],
             );
             if($curl_info['http_code'] == '404'){
                 $this->error['msg'] = 'Incorrect URL. File not found.';
             }
             if($curl_info['http_code'] == 0){
-                $this->error['msg'] = 'Network Error! Maybe, connection error.';
+                $this->error['msg'] = __('Network Error! Maybe, connection error.', 'mytory-markdown');
             }
             return FALSE;
         }
@@ -391,7 +396,7 @@ class Mytory_Markdown {
     function register_meta_box() {
         add_meta_box(
             'mytory-markdown-path',
-            'Markdown File Path',
+            __('Markdown File Path', 'mytory-markdown'),
             array(&$this, 'meta_box_inner')
         );
     }
