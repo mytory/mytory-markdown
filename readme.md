@@ -1,7 +1,7 @@
 # Mytory Markdown #
 **Contributors:** mytory  
 **Donate link:** http://mytory.net/paypal-donation  
-**Tags:** markdown  
+**Tags:** markdown, md, dropbox  
 **Tested up to:** 3.8  
 **Stable tag:** 1.3.1  
 **License:** GPLv2 or later  
@@ -41,6 +41,10 @@ This plugin get file url(Dropbox public link is recommended). And save header's 
 ### This plugin divide title and content from md file. ###
 
 If markdown file has `h1` this plugin puts first `h1` string to post_title. Of course, remove the `h1` from post_content so don't print title twice.
+
+#### GitHub ####
+
+[Mytory Markdown Github](https://github.com/mytory/mytory-markdown)
 
 ## Installation ##
 
