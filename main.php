@@ -146,10 +146,10 @@ class Mytory_Markdown {
         if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
             $post_content =  "<p>{$this->error['msg']}</p>" . $post_content;
         }
-        if ( ! empty($this->debug_msg) AND current_user_can('edit_posts')){
+        if ( ! empty($this->debug_msg) AND current_user_can('edit_posts') AND get_option('debug_msg') == 'yes'){
             $debug = '<ul>';
             foreach ($this->debug_msg as $msg) {
-                $debug .= "<li>debug: {$msg}</li>";
+                $debug .= "<li>mytory markdown debug: {$msg}</li>";
             }
             $debug .= "</ul>";
             $post_content = $debug . $post_content;
