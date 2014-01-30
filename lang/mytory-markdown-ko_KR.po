@@ -2,18 +2,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mytory Markdown 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-30 04:58+0900\n"
-"PO-Revision-Date: 2014-01-30 04:59+0900\n"
-"Last-Translator: Ahn, Hyoung-woo <mytory@gmail.com>\n"
+"POT-Creation-Date: 2014-01-30 20:43+0900\n"
+"PO-Revision-Date: 2014-01-30 20:44+0900\n"
+"Last-Translator: mytory <mytory@gmail.com>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: /home/mytory/workspace/mytory.net/html/wp-content/plugins/mytory-markdown/\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: main.php:343
+msgid "Network Error! HTTP STATUS is "
+msgstr "네트워크 에러! HTTP 상태 : "
+
+#: main.php:349
+msgid "Network Error! Maybe, connection error."
+msgstr "네트워크 에러! 인터넷 연결이 안 됩니다."
+
+#: main.php:399
+msgid "Markdown File Path"
+msgstr "마크다운 파일 경로"
 
 #: meta-box.php:19
 msgid "Update"
@@ -27,26 +39,19 @@ msgstr "에디터 내용 갱신"
 msgid "Please fill the markdown file URL."
 msgstr "마크다운 파일 URL를 채워 주세요."
 
-#: meta-box.php:37
-#: meta-box.php:39
+#: meta-box.php:37 meta-box.php:39
 msgid ".js-dropbox-public-link-alert"
 msgstr ".js-dropbox-public-link-alert-ko_KR"
 
 #: meta-box.php:73
-msgid "Unknown error. Please copy error text on textarea bottom of markdown plugin url input element and send to me(mytory@gmail.com). So, I can recognize the reason for the error."
-msgstr "알 수 없는 에러. 아래쪽에 있는 텍스트 박스의 메시지를 복사해서 저에게 메일로 보내 주시면 감사하겠습니다. (mytory@gmail.com) 그러면 에러 원인을 찾을 수 있습니다."
-
-#: main.php:343
-msgid "Network Error! HTTP STATUS is "
-msgstr "네트워크 에러! HTTP 상태 : "
-
-#: main.php:349
-msgid "Network Error! Maybe, connection error."
-msgstr "네트워크 에러! 인터넷 연결이 안 됩니다."
-
-#: main.php:399
-msgid "Markdown File Path"
-msgstr "마크다운 파일 경로"
+msgid ""
+"Unknown error. Please copy error text on textarea bottom of markdown plugin "
+"url input element and send to me(mytory@gmail.com). So, I can recognize the "
+"reason for the error."
+msgstr ""
+"알 수 없는 에러. 아래쪽에 있는 텍스트 박스의 메시지를 복사해서 저에게 메일로 "
+"보내 주시면 감사하겠습니다. (mytory@gmail.com) 그러면 에러 원인을 찾을 수 있"
+"습니다."
 
 #: setting.php:2
 msgid "Mytory Markdown Setting"
@@ -65,8 +70,12 @@ msgid "Auto update per x visits"
 msgstr "해당 글 x회 방문마다 자동 갱신"
 
 #: setting.php:47
-msgid "This feature is for site traffic, too. If you check y to above 'auto update only when writer (or admin) visits', this feature don't be applied."
-msgstr "이 기능도 트래픽 때문에 넣은 겁니다. 만약 위에 \"글쓴이 (혹은 관리자)가 글을 볼 때만 자동 갱신\" 기능을 켰다면, 이 기능은 적용되지 않습니다."
+msgid ""
+"This feature is for site traffic, too. If you check y to above 'auto update "
+"only when writer (or admin) visits', this feature don't be applied."
+msgstr ""
+"이 기능도 트래픽 때문에 넣은 겁니다. 만약 위에 \"글쓴이 (혹은 관리자)가 글을 "
+"볼 때만 자동 갱신\" 기능을 켰다면, 이 기능은 적용되지 않습니다."
 
 #: setting.php:58
 msgid "Print Debug Message on post/page"
@@ -76,3 +85,6 @@ msgstr "글에서 디버그 메시지 출력"
 msgid "Of course, it doesn't be showed normal users."
 msgstr "물론 일반 사용자에겐 보이지 않습니다."
 
+#: setting.php:75
+msgid "If you like this plugin, please rate on wordpress plugin site."
+msgstr "이게 맘에 드시면 워드프레스 플러그인 사이트에서 추천 부탁드립니다."

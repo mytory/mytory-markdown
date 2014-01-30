@@ -71,7 +71,9 @@
             </td>
         </tr>
     </table>
-    <p><a href="http://wordpress.org/support/view/plugin-reviews/mytory-markdown">If you like this plugin, please rate on wordpress plugin site.</a></p>
+    <p><a href="http://wordpress.org/support/view/plugin-reviews/mytory-markdown">
+        <?php _e('If you like this plugin, please rate on wordpress plugin site.', 'mytory-markdown'); ?>
+    </a></p>
 
     <?php
     submit_button();
