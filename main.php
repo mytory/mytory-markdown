@@ -51,7 +51,9 @@ class Mytory_Markdown {
         }
 
         ob_start();
+        echo "<pre>";
         var_dump($query->query_vars);
+        echo "</pre>";
         $this->debug_msg[] = ob_get_contents();
         ob_end_clean();
 

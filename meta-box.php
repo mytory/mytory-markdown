@@ -59,7 +59,11 @@
                     }else{
 
                         // wysiwyg mode
-                        tinymce.getInstanceById('content').setContent(res.post_content);
+                        if(tinymce.getInstanceById){
+                            tinymce.getInstanceById('content').setContent(res.post_content); 
+                        }else{
+                            tinymce.get('content').setContent(res.post_content); 
+                        }
                     }
                 }
             }, 'json');
