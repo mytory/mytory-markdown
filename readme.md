@@ -1,24 +1,17 @@
 # Mytory Markdown #
-
-**Contributors:** mytory  
-
-**Donate link:** http://mytory.net/paypal-donation  
-
+**Contributors:** mytory  
+**Donate link:** http://mytory.net/paypal-donation  
 **Tags:** markdown, md, dropbox  
-**Tested up to:** 3.9.1 
-
+**Tested up to:** 3.9.1  
 **Stable tag:** 1.3.4  
 **License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
-
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 ## Description ##
 
-Dropbox changed its public document must use https. So, this plugin may not work. This is depending on the environment.
+Fixed it does not work. 
 
-[드롭박스가 공개 문서가 무조건 https를 사용하도록 했다. 그래서 이 플러그인이 작동하지 않을 수도 있다. 작동여부는 환경에 따라 다르다.]
-
-I'll fix it. I'm sorry.
+Dropbox changed its public document must use https. So this plugin did not worked. Than [WickedSik](https://github.com/WickedSik) fixed the issue.
 
 ### Features ###
 
@@ -66,7 +59,7 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 ### 1.3.4 ###
 
-Enable cURL redirection. Thanks to [WickedSik](https://github.com/WickedSik).
+Fixed it does not work. Enabled cURL redirection. Thanks to [WickedSik](https://github.com/WickedSik).
 
 ### 1.3.3 ###
 
