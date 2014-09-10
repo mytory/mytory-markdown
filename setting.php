@@ -57,7 +57,7 @@
         }
         ?>
         <tr valign="top">
-            <th scope="row"><?php _e('Manual update on view page.', 'mytory-markdown')?></th>
+            <th scope="row"><?php _e('Manual update on view page', 'mytory-markdown')?></th>
             <td>
                 <label>
                     <input type="radio" name="manual_update" id="manual_update_yes" value="yes"
