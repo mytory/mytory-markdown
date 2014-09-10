@@ -3,7 +3,7 @@
 Plugin Name: Mytory Markdown
 Description: This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 Author: mytory
-Version: 1.3.3
+Version: 1.4.0
 Author URI: http://mytory.net
 */
 
@@ -20,7 +20,15 @@ class Mytory_Markdown {
 
     function Mytory_Markdown() {
         add_action('plugins_loaded', array(&$this, 'plugin_init'));
-        add_action('pre_get_posts', array(&$this, 'apply_markdown'));
+        if(get_option('manual_update') != 'yes'){
+            add_action('pre_get_posts', array(&$this, 'conditional_apply_markdown'));
+        }else{
+            add_filter('the_content', array(&$this, 'manual_update_button'));
+        }
+        if(isset($_POST['mytory_markdown_manual_update']) 
+                && $_POST['mytory_markdown_manual_update'] == 'do'){
+            add_action('pre_get_posts', array(&$this, 'apply_markdown'));
+        }
         add_filter('the_content', array(&$this, 'attach_error_msg'));
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
         add_action('save_post', array(&$this, 'update_post'));
@@ -33,11 +41,7 @@ class Mytory_Markdown {
         load_plugin_textdomain('mytory-markdown', false, dirname(plugin_basename( __FILE__ )) .'/lang' ); 
     }
 
-    /**
-     * apply markdown on pre_get_posts
-     */
-    public function apply_markdown($query) {
-
+    function conditional_apply_markdown($query){
         if($this->worked == true){
             return;
         }
@@ -49,6 +53,16 @@ class Mytory_Markdown {
             $this->debug_msg[] = "Auto update only writer or admin visits is Y and current user can't edit posts. So don't work.";
             return;
         }
+
+        $this->apply_markdown($query);
+    }
+
+    /**
+     * apply markdown on pre_get_posts
+     */
+    public function apply_markdown($query) {
+
+        $auto_update_only_writer_visits = get_option('auto_update_only_writer_visits');
 
         ob_start();
         echo "<pre>";
@@ -430,6 +444,7 @@ class Mytory_Markdown {
         register_setting( 'mytory-markdown-option-group', 'auto_update_only_writer_visits' );
         register_setting( 'mytory-markdown-option-group', 'auto_update_per' );
         register_setting( 'mytory-markdown-option-group', 'debug_msg' );
+        register_setting( 'mytory-markdown-option-group', 'manual_update' );
     }
 
     function add_menu() {
@@ -442,6 +457,24 @@ class Mytory_Markdown {
 
     function print_setting_page(){
         include "setting.php";
+    }
+
+    function manual_update_button($post_content){
+        global $post;
+        if ( ! current_user_can('edit_post', get_the_ID())) {
+            return;
+        }
+        ob_start();
+        ?>
+        <form style="margin: 1em 0; text-align: center" method="post">
+            <input type="hidden" name="mytory_markdown_manual_update" value="do">
+            <input type="submit" value="<?php _e('Manual Update with Mytory Markdown', 'mytory-markdown') ?>">
+        </form>
+        <?php
+        $manual_update_button_html = ob_get_contents();
+        ob_end_clean();
+
+        return $manual_update_button_html . $post_content . $manual_update_button_html;
     }
 }
 

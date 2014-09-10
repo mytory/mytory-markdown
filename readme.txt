@@ -2,8 +2,8 @@
 Contributors: mytory
 Donate link: http://mytory.net/paypal-donation
 Tags: markdown, md, dropbox
-Tested up to: 3.9.1
-Stable tag: 1.3.4
+Tested up to: 4.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,10 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.4.0 =
+
+Feature that manual update on view page.
 
 = 1.3.4 =
 
