@@ -461,9 +461,11 @@ class Mytory_Markdown {
 
     function manual_update_button($post_content){
         global $post;
+        
         if ( ! current_user_can('edit_post', get_the_ID())) {
-            return;
+            return $post_content;
         }
+
         ob_start();
         ?>
         <form style="margin: 1em 0; text-align: center" method="post">
