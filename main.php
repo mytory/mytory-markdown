@@ -64,6 +64,8 @@ class Mytory_Markdown {
 
         $auto_update_only_writer_visits = get_option('auto_update_only_writer_visits');
 
+        ini_set('memory_limit', -1);
+
         ob_start();
         echo "<pre>";
         var_dump($query->query_vars);
@@ -462,7 +464,8 @@ class Mytory_Markdown {
     function manual_update_button($post_content){
         global $post;
         
-        if ( ! current_user_can('edit_post', get_the_ID())) {
+        if ( ! current_user_can('edit_post', get_the_ID()) 
+                or ! get_post_meta($post->ID, 'mytory_md_path', true)) {
             return $post_content;
         }
 
