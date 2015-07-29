@@ -2,7 +2,7 @@
 Contributors: mytory
 Donate link: http://mytory.net/paypal-donation
 Tags: markdown, md, dropbox
-Tested up to: 4.0
+Tested up to: 4.2.3
 Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
