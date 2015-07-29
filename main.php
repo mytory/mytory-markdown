@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Mytory Markdown
-Description: This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
+Description: This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
 Author: mytory
 Version: 1.4.2
 Author URI: http://mytory.net

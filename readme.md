@@ -7,8 +7,11 @@
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
+## Description ##
 
-### Features ###
+This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
+
+## Features ##
 
 **[View intro video.](http://youtu.be/mCgzB1aCQgM)**
 
@@ -22,7 +25,7 @@
 * You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
 
 
-### Notice about Dropbox ###
+## Notice about Dropbox ##
 
 This plugin use dropbox 'Public link'. Currently only Dropbox Pro and Business users may enable Public folders.
 
@@ -31,7 +34,7 @@ If you are Pro and Business user, [visit this page to 'enable public folder'.](h
 If you are not, you can use GitHub, instead.
 
 
-### Use GitHub for Mytory Markdown ###
+## Use GitHub for Mytory Markdown ##
 
 I do not describe github usage. Find it other site.
 
@@ -50,7 +53,7 @@ Next, copy URL and paste it to markdown file path on 'add new post' page in your
 Last, click 'Update Editor Content' button.
 
 
-### Logic ###
+## Logic ##
 
 #### On admin page ####
 
@@ -62,7 +65,7 @@ On admin write page, put markdown url path. And click 'update editor' button. So
 
 This plugin get file url(Dropbox public link is recommended). And save header's etag to postmeta and converted html to post_content. Next time on request same post, first this plugin olny get dropbox http etag. If changed etag, get dropbox md content and save again, or get html from post_content.
 
-### This plugin divide title and content from md file. ###
+## This plugin divide title and content from md file ##
 
 If markdown file has `h1` this plugin puts first `h1` string to post_title. Of course, remove the `h1` from post_content so don't print title twice.
 
