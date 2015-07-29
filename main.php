@@ -3,7 +3,7 @@
 Plugin Name: Mytory Markdown
 Description: This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
 Author: mytory
-Version: 1.4.1
+Version: 1.4.2
 Author URI: http://mytory.net
 */
 
@@ -43,7 +43,7 @@ class Mytory_Markdown {
 
     function conditional_apply_markdown($query){
         if($this->worked == true){
-            return;
+            return null;
         }
         $this->worked = true;
 
@@ -51,7 +51,7 @@ class Mytory_Markdown {
 
         if($auto_update_only_writer_visits == 'y' AND ! current_user_can('edit_posts')){
             $this->debug_msg[] = "Auto update only writer or admin visits is Y and current user can't edit posts. So don't work.";
-            return;
+            return null;
         }
 
         $this->apply_markdown($query);
@@ -59,6 +59,8 @@ class Mytory_Markdown {
 
     /**
      * apply markdown on pre_get_posts
+     * @param $query
+     * @return string
      */
     public function apply_markdown($query) {
 
@@ -94,19 +96,19 @@ class Mytory_Markdown {
                 $this->post = $posts[0];
             }else{
                 $this->debug_msg[] = "There is not post/page that has slug '{$slug}'. So don't work.";
-                return;
+                return null;
             }
 
         }else{
             // post도 page도 아닌 경우
             $this->debug_msg[] = "This is not post/page. So don't work.";
-            return;
+            return null;
         }
 
         if( ! is_single() and ! is_page()){
             // single이 아닌 경우
             $this->debug_msg[] = "This is not single page. So don't work.";
-            return;
+            return null;
         }
 
         // 'Auto update per x visits' feature work only when 'Auto update only writer visits' feature disabled.
@@ -123,7 +125,7 @@ class Mytory_Markdown {
                 $visits_count++;
                 if($visits_count % $auto_update_per !== 0){
                     $this->debug_msg[] = "'Auto update per' option is enabled. And count is not full. So don't work.";
-                    return;
+                    return null;
                 }
             }
         }
@@ -132,7 +134,7 @@ class Mytory_Markdown {
 
         if( ! $markdown_path){
             $this->debug_msg[] = "This don't has markdown path. So don't work.";
-            return;
+            return null;
         }
         $markdown_path = str_replace('https://', 'http://', $markdown_path);
 
@@ -158,6 +160,7 @@ class Mytory_Markdown {
         }else{
             $this->debug_msg[] = "Etag was not changed. So content has not been updated.";
         }
+        return null;
     }
 
     /**
@@ -216,7 +219,7 @@ class Mytory_Markdown {
         ini_set('display_errors', 1);
         error_reporting(E_ERROR | E_WARNING);
 
-        $md_path = str_replace('https://', 'http://', $_REQUEST['md_path']);
+        $md_path = $_REQUEST['md_path'];
 
         $etag_new = $this->_get_etag($md_path);
 
@@ -290,7 +293,7 @@ class Mytory_Markdown {
     }
 
     /**
-     * get etag from dropbox url
+     * get etag from url
      * @param  string $url
      * @return string
      */
@@ -298,7 +301,12 @@ class Mytory_Markdown {
         $header = $this->_get_header_from_url($url);
         $header = $this->_http_parse_headers($header);
 
-        if (isset($header['etag'])) {
+        foreach ($header as $key => $value) {
+            $key_lower = strtolower($key);
+            $header[$key_lower] = $value;
+        }
+
+        if (!empty($header['etag'])) {
             return $header['etag'];
         } else {
             return NULL;
@@ -430,7 +438,7 @@ class Mytory_Markdown {
 
     function update_post($post_id) {
         if (!current_user_can('edit_post', $post_id)) {
-            return;
+            return null;
         }
 
         // 데이터 저장
@@ -441,7 +449,7 @@ class Mytory_Markdown {
 
     function register_settings() { // whitelist options
         if ( ! current_user_can('activate_plugins') ){
-            return;
+            return null;
         }
         register_setting( 'mytory-markdown-option-group', 'auto_update_only_writer_visits' );
         register_setting( 'mytory-markdown-option-group', 'auto_update_per' );
@@ -451,7 +459,7 @@ class Mytory_Markdown {
 
     function add_menu() {
         if ( ! current_user_can('activate_plugins') ){
-            return;
+            return null;
         }
         add_submenu_page('options-general.php', 'Mytory Markdown Setting', 'Mytory Markdown', 'activate_plugins', 'mytory-markdown', 
                 array(&$this, 'print_setting_page'));

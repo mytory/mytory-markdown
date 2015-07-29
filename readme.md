@@ -1,17 +1,12 @@
 # Mytory Markdown #
 **Contributors:** mytory  
 **Donate link:** http://mytory.net/paypal-donation  
-**Tags:** markdown, md, dropbox  
-**Tested up to:** 4.2.3
-**Stable tag:** 1.4.1  
+**Tags:** markdown, md, dropbox, github  
+**Tested up to:** 4.2.3  
+**Stable tag:** 1.4.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-## Description ##
-
-Fixed it does not work. 
-
-Dropbox changed its public document must use https. So this plugin did not worked. Than [WickedSik](https://github.com/WickedSik) fixed the issue.
 
 ### Features ###
 
@@ -19,18 +14,43 @@ Dropbox changed its public document must use https. So this plugin did not worke
 
 [youtube http://www.youtube.com/watch?v=mCgzB1aCQgM]
 
-* This plugin get markdown file path on dropbox public link, convert markdown to html, and put it to post content.
-* You can update post **by editing file on your computer with dropbox sync function.** Of course, that's ok even if content editor is empty, when you write new post. If you have entered markdown file's URL, plugin will take care of.
+* This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
+* You can update post **by editing file on your computer with dropbox sync feature.** Or you can update post **by push your content to github**. Of course, you can edit directly from github website.
 * If post was updated once, plugin check only URL server's ETAG not full content. It is for speed. If ETAG was changed, plugin get new content and update post content. Or do nothing.
-* Plugin use WordPress's `wp_update_post()` function. So revision history is preserved.
+* Plugin only pass converted html content to editor. Saving is WordPress's work. So revision history is preserved.
 * Plugin's compatibility is good. Because this plugin updates only post content html. This doesn't touch `the_content` process(vary plugins touch the process).
 * You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
 
+
+### Notice about Dropbox ###
+
+This plugin use dropbox 'Public link'. Currently only Dropbox Pro and Business users may enable Public folders.
+
+If you are Pro and Business user, [visit this page to 'enable public folder'.](https://www.dropbox.com/enable_public_folder)
+
+If you are not, you can use GitHub, instead.
+
+
+### Use GitHub for Mytory Markdown ###
+
+I do not describe github usage. Find it other site.
+
+Create markdown file, and push it to github. So you can see it your github repository. Click it.
+
+![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-1.jpg)
+
+And click 'Raw' button on your markdown file page like below.
+
+![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-2.jpg)
+
+Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site.
+
+![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-3.jpg)
+
+Last, click 'Update Editor Content' button.
+
+
 ### Logic ###
-
-#### You have to enable dropbox 'Public Folder' ####
-
-This plugin use dropbox 'Public link'. If you register dropbox account after December 6, 2012 you don't have Public folder. Then, [visit this page to 'enable public folder'](https://www.dropbox.com/enable_public_folder).
 
 #### On admin page ####
 
@@ -46,7 +66,7 @@ This plugin get file url(Dropbox public link is recommended). And save header's 
 
 If markdown file has `h1` this plugin puts first `h1` string to post_title. Of course, remove the `h1` from post_content so don't print title twice.
 
-#### GitHub ####
+#### Source Code ####
 
 [Mytory Markdown Github](https://github.com/mytory/mytory-markdown)
 
@@ -56,6 +76,10 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 ## Changelog ##
+
+### 1.4.2 ###
+
+It can use github raw url for markdown file.
 
 ### 1.4.1 ###
 
