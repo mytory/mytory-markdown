@@ -2,9 +2,9 @@
 **Contributors:** mytory  
 **Donate link:** http://mytory.net/paypal-donation  
 **Tags:** markdown, md, dropbox, github  
-**Tested up to:** 4.2.3  
+**Tested up to:** 4.2.4  
 **Requires at least:** null  
-**Stable tag:** 1.4.2  
+**Stable tag:** 1.4.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -81,6 +81,10 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 ## Changelog ##
+
+### 1.4.3 ###
+
+Fix a bug that it not work when `open_basedir` is set(`open_basedir`이 설정돼 있을 때 warning이 뜨면서 작동하지 않는 버그 수정). Cao Quảng Bình reported.
 
 ### 1.4.2 ###
 
