@@ -331,7 +331,7 @@ class Mytory_Markdown {
         curl_setopt($curl, CURLOPT_HEADER, TRUE);
         curl_setopt($curl, CURLOPT_NOBODY, TRUE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        if(empty(ini_get('open_basedir'))){
+        if(!ini_get('open_basedir')){
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
         }
         $header = curl_exec($curl);
@@ -353,7 +353,7 @@ class Mytory_Markdown {
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, FALSE);
         curl_setopt($curl, CURLOPT_NOBODY, FALSE);
-        if(empty(ini_get('open_basedir'))){
+        if(!ini_get('open_basedir')){
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
         }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
