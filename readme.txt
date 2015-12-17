@@ -1,10 +1,10 @@
 === Mytory Markdown ===
 Contributors: mytory
 Donate link: http://mytory.net/paypal-donation
-Tags: markdown, md, dropbox, github
-Tested up to: 4.2.4
+Tags: markdown, md, dropbox, github, markdown editor
+Tested up to: 4.4
 Requires at least: null
-Stable tag: 1.4.3
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Description ==
 
 This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
+
+It also provide text mode that write markdown in post edit page. Markdown text converted to html is put to editor by real-time. Text mode don't use url.
 
 = Features =
 
@@ -25,11 +27,15 @@ This plugin get markdown file path on dropbox public link or github raw content 
 * Plugin only pass converted html content to editor. Saving is WordPress's work. So revision history is preserved.
 * Plugin's compatibility is good. Because this plugin updates only post content html. This doesn't touch `the_content` process(vary plugins touch the process).
 * You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
+* It provide markdown editor that can use in post editing page instead of url.
 
 
 = Notice about Dropbox =
 
-This plugin use dropbox 'Public link'. Currently only Dropbox Pro and Business users may enable Public folders.
+This plugin use dropbox 'Public link' not 'Share link'. Currently only Dropbox Pro and Business users may enable Public folders. Below is a example.
+
+- Public link: [https://dl.dropboxusercontent.com/u/15546257/test.md]
+- Share link: [https://www.dropbox.com/s/rgin3gbpa5y0505/test.md?dl=0]
 
 If you are Pro and Business user, [visit this page to 'enable public folder'.](https://www.dropbox.com/enable_public_folder)
 
@@ -81,6 +87,10 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.5.0 =
+
+Added text mode. This mode only use markdown editor(plain text editor) instead of url. It provide real-time conversion.
 
 = 1.4.3 =
 

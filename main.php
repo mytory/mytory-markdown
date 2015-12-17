@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Mytory Markdown
-Description: This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
+Description: This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content. It also provide real-time conversion editor. This feature don't need dropbox url. You can directly write markdown in editing page and see real-time conversion.
 Author: mytory
-Version: 1.4.3
+Version: 1.5
 Author URI: http://mytory.net
 */
 
@@ -494,7 +494,9 @@ class Mytory_Markdown {
         global $post;
         
         if ( ! current_user_can('edit_post', get_the_ID()) 
-                or ! get_post_meta($post->ID, 'mytory_md_path', true)) {
+                or ! get_post_meta($post->ID, 'mytory_md_path', true)
+                or get_post_meta($post->ID, 'mytory_md_mode', 'text')
+        ) {
             return $post_content;
         }
 

@@ -21,6 +21,7 @@
     <tr class="js-mode  js-mode--text  hidden">
         <th scope="row">Text</th>
         <td>
+            <p>First line heading is set to title.</p>
             <textarea class="large-text" name="mytory_md_text" rows="20"><?php echo $md_text ?></textarea>
         </td>
     </tr>
