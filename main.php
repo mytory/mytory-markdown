@@ -35,6 +35,14 @@ class Mytory_Markdown {
         add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
         add_action('admin_menu', array(&$this, 'add_menu'));
         add_action('admin_init', array(&$this, 'register_settings'));
+        add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
+    }
+
+    function enqueue_scripts($hook) {
+        if ( ! in_array($hook, ['post.php', 'post-new.php'])) {
+            return;
+        }
+        wp_enqueue_script('marked', plugin_dir_url( __FILE__ ) . 'js/marked.min.js', [], '0.3.5', true);
     }
 
     function plugin_init() {
@@ -229,6 +237,7 @@ class Mytory_Markdown {
                 'error_msg' => $this->error['msg'],
                 'post_title' => 'error',
                 'post_content' => 'error',
+                'curl_info' => $this->error['curl_info'],
             );
             echo json_encode($res);
             die();
@@ -331,6 +340,7 @@ class Mytory_Markdown {
         curl_setopt($curl, CURLOPT_HEADER, TRUE);
         curl_setopt($curl, CURLOPT_NOBODY, TRUE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         if(!ini_get('open_basedir')){
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
         }
@@ -379,6 +389,7 @@ class Mytory_Markdown {
             if($curl_info['http_code'] == 0){
                 $this->error['msg'] = __('Network Error! Maybe, connection error.', 'mytory-markdown');
             }
+            $this->error['curl_info'] = $curl_info;
             return FALSE;
         }
         return TRUE;
@@ -433,9 +444,13 @@ class Mytory_Markdown {
     }
 
     function meta_box_inner() {
-        $markdown_path = '';
+        $md_path = '';
+        $md_mode = 'url';
+        $md_text = '';
         if(isset($_GET['post'])){
-            $markdown_path = get_post_meta($_GET['post'], 'mytory_md_path', TRUE);
+            $md_path = get_post_meta($_GET['post'], 'mytory_md_path', TRUE);
+            $md_mode = get_post_meta($_GET['post'], 'mytory_md_mode', TRUE);
+            $md_text = get_post_meta($_GET['post'], 'mytory_md_text', TRUE);
         }
         include 'meta-box.php';
     }
@@ -448,6 +463,8 @@ class Mytory_Markdown {
         // 데이터 저장
         if(isset($_POST['mytory_md_path'])){
             update_post_meta($post_id, 'mytory_md_path', $_POST['mytory_md_path']);
+            update_post_meta($post_id, 'mytory_md_text', $_POST['mytory_md_text']);
+            update_post_meta($post_id, 'mytory_md_mode', $_POST['mytory_md_mode']);
         }
     }
 

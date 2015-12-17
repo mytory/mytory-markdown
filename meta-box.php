@@ -1,11 +1,30 @@
 <table class="form-table">
     <tr>
-        <th scope="row">URL</th>
+        <th scope="row">Mode</th>
         <td>
-            <input type="url" name="mytory_md_path" id="mytory-md-path" class="large-text" value="<?php echo $markdown_path?>">
+            <label>
+                <input class="js-mode-button" type="radio" name="mytory_md_mode"
+                    <?= $md_mode == 'url' ? 'checked' : '' ?> value="url" checked> URL
+            </label>
+            <label>
+                <input class="js-mode-button" type="radio" name="mytory_md_mode" value="text"
+                    <?= $md_mode == 'text' ? 'checked' : '' ?>> Text
+            </label>
         </td>
     </tr>
-    <tr>
+    <tr class="js-mode  js-mode--url  hidden">
+        <th scope="row">URL</th>
+        <td>
+            <input type="url" name="mytory_md_path" id="mytory-md-path" class="large-text" value="<?php echo $md_path ?>">
+        </td>
+    </tr>
+    <tr class="js-mode  js-mode--text  hidden">
+        <th scope="row">Text</th>
+        <td>
+            <textarea class="large-text" name="mytory_md_text" rows="20"><?php echo $md_text ?></textarea>
+        </td>
+    </tr>
+    <tr class="js-mode js-mode--url hidden">
         <th><?php _e('Update', 'mytory-markdown')?></th>
         <td>
             <button type="button" class="button js-update-content"><?php _e('Update Editor Content', 'mytory-markdown')?></button>
@@ -14,6 +33,33 @@
 </table>
 <script type="text/javascript">
     jQuery(document).ready(function($){
+
+        $('.js-mode-button').click(function(){
+            var mode = $(this).val();
+            $('.js-mode').addClass('hidden');
+            $('.js-mode--' + mode).removeClass('hidden');
+        });
+        $('.js-mode-button:checked').click();
+
+        $('[name=mytory_md_text]').keyup(function(){
+            var content = marked($(this).val());
+            var title = '';
+            var obj;
+            if(content.substr(0, 3) == '<h1'){
+                var tmp = content.split("\n");
+                console.log('tmp', tmp);
+                title = $(tmp.shift()).text();
+                content = tmp.join("\n");
+            }
+            obj = {
+                'post_title': title,
+                'post_content': content
+            }
+            console.log(obj.post_title);
+            console.log(obj.post_content);
+            mytory_markdown_set_content(obj);
+        });
+
          $('.js-update-content').click(function(){
 
              $('.js-mytory-markdown-error-info').remove();
@@ -35,22 +81,7 @@
                      alert(res.error_msg);
                      return false;
                  } else {
-                     if (res.post_title) {
-                         $('#title').val(res.post_title).focus().blur();
-                     }
-                     if ($('#content').is(':visible')) {
-
-                         // text mode
-                         $('#content').val(res.post_content);
-                     } else {
-
-                         // wysiwyg mode
-                         if (tinymce.getInstanceById) {
-                             tinymce.getInstanceById('content').setContent(res.post_content);
-                         } else {
-                             tinymce.get('content').setContent(res.post_content);
-                         }
-                     }
+                     mytory_markdown_set_content(res);
                  }
              }, 'json');
 
@@ -63,5 +94,25 @@
                  alert('<?php _e("Unknown error. Please copy error text on textarea bottom of markdown plugin url input element and send to me(mytory@gmail.com). So, I can recognize the reason for the error.", "mytory-markdown") ?>');
              });
          });
+
+        function mytory_markdown_set_content(obj){
+            if (obj.post_title) {
+                $('#title').val(obj.post_title);
+                $('#title-prompt-text').addClass('screen-reader-text');
+            }
+            if ($('#content').is(':visible')) {
+
+                // text mode
+                $('#content').val(obj.post_content);
+            } else {
+
+                // wysiwyg mode
+                if (tinymce.getInstanceById) {
+                    tinymce.getInstanceById('content').setContent(obj.post_content);
+                } else {
+                    tinymce.get('content').setContent(obj.post_content);
+                }
+            }
+        }
     });
 </script>
