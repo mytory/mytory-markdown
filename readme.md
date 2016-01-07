@@ -46,7 +46,7 @@ If you are not, you can use GitHub, instead.
 
 #### On admin page ####
 
-On admin write page, put markdown url path. And click 'update editor' button. So markdown content converted to html is putted to editor. See below screenshot 1.
+On admin write page, put markdown url path. And click 'update editor' button. So markdown content converted to html is putted to editor. [See screenshot 1](https://wordpress.org/plugins/mytory-markdown/screenshots/).
 
 #### On view page ####
 
