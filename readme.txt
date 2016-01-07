@@ -4,7 +4,7 @@ Donate link: http://mytory.net/paypal-donation
 Tags: markdown, md, dropbox, github, markdown editor
 Tested up to: 4.4
 Requires at least: null
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,40 +34,19 @@ It also provide text mode that write markdown in post edit page. Markdown text c
 
 This plugin use dropbox 'Public link' not 'Share link'. Currently only Dropbox Pro and Business users may enable Public folders. Below is a example.
 
-- Public link: [https://dl.dropboxusercontent.com/u/15546257/test.md]
-- Share link: [https://www.dropbox.com/s/rgin3gbpa5y0505/test.md?dl=0]
+- (Public link)[https://dl.dropboxusercontent.com/u/15546257/test.md]
+- (Share link)[https://www.dropbox.com/s/rgin3gbpa5y0505/test.md?dl=0]
 
 If you are Pro and Business user, [visit this page to 'enable public folder'.](https://www.dropbox.com/enable_public_folder)
 
 If you are not, you can use GitHub, instead.
 
 
-= Use GitHub for Mytory Markdown =
-
-I do not describe github usage. Find it other site.
-
-Create markdown file, and push it to github. So you can see it your github repository. Click it.
-
-![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-1.jpg)
-
-And click 'Raw' button on your markdown file page like below.
-
-![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-2.jpg)
-
-Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site.
-
-![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-3.jpg)
-
-Last, click 'Update Editor Content' button.
-
-
 = Logic =
 
 #### On admin page ####
 
-On admin write page, put markdown url path. And click 'update editor' button. So markdown content converted to html is putted to editor.
-
-![](http://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/animated.gif)
+On admin write page, put markdown url path. And click 'update editor' button. So markdown content converted to html is putted to editor. See below screenshot 1.
 
 #### On view page ####
 
@@ -81,12 +60,34 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 [Mytory Markdown Github](https://github.com/mytory/mytory-markdown)
 
+== Screenshots ==
+
+1. Usage - paste markdown file url. In fact, any markdown file url is accepted. Although it's not Dropbox nor Github, if the file is markdown file, it is acceptable.
+
+![](http://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/animated.gif)
+
+2. GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.
+
+![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-1.jpg)
+
+3. GitHub Usage 2: And click 'Raw' button on your markdown file page like below.
+
+![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-2.jpg)
+
+4. GitHub Usage 3: Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site. Last, click 'Update Editor Content' button.
+
+![](https://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/mytory-markdown-github-3.jpg)
+
 == Installation ==
 
 1. Upload files to the `/wp-content/plugins/mytory-markdown/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.5.1 =
+
+Backward compatibility for array literal(remove [] array literal).
 
 = 1.5.0 =
 
