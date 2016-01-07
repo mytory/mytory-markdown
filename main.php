@@ -25,7 +25,7 @@ class Mytory_Markdown {
         }else{
             add_filter('the_content', array(&$this, 'manual_update_button'));
         }
-        if(isset($_POST['mytory_markdown_manual_update']) 
+        if(isset($_POST['mytory_markdown_manual_update'])
                 && $_POST['mytory_markdown_manual_update'] == 'do'){
             add_action('pre_get_posts', array(&$this, 'apply_markdown'));
         }
@@ -36,17 +36,18 @@ class Mytory_Markdown {
         add_action('admin_menu', array(&$this, 'add_menu'));
         add_action('admin_init', array(&$this, 'register_settings'));
         add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
+
     }
 
     function enqueue_scripts($hook) {
-        if ( ! in_array($hook, ['post.php', 'post-new.php'])) {
+        if ( ! in_array($hook, array('post.php', 'post-new.php'))) {
             return;
         }
-        wp_enqueue_script('marked', plugin_dir_url( __FILE__ ) . 'js/marked.min.js', [], '0.3.5', true);
+        wp_enqueue_script('marked', plugin_dir_url( __FILE__ ) . 'js/marked.min.js', array(), '0.3.5', true);
     }
 
     function plugin_init() {
-        load_plugin_textdomain('mytory-markdown', false, dirname(plugin_basename( __FILE__ )) .'/lang' ); 
+        load_plugin_textdomain('mytory-markdown', false, dirname(plugin_basename( __FILE__ )) .'/lang' );
     }
 
     function conditional_apply_markdown($query){
@@ -94,7 +95,7 @@ class Mytory_Markdown {
             $this->debug_msg[] = "This is page.";
 
         }else if($query->query_vars['pagename'] OR $query->query_vars['name']){
-            
+
             // page인 경우 OR slug 형태 주소인 경우.
             $slug = ($query->query_vars['pagename'] ? $query->query_vars['pagename'] : $query->query_vars['name']);
             $posts = get_posts(array('post_type' => 'any','name' => $slug));
@@ -482,7 +483,7 @@ class Mytory_Markdown {
         if ( ! current_user_can('activate_plugins') ){
             return null;
         }
-        add_submenu_page('options-general.php', 'Mytory Markdown Setting', 'Mytory Markdown', 'activate_plugins', 'mytory-markdown', 
+        add_submenu_page('options-general.php', 'Mytory Markdown Setting', 'Mytory Markdown', 'activate_plugins', 'mytory-markdown',
                 array(&$this, 'print_setting_page'));
     }
 
@@ -492,8 +493,8 @@ class Mytory_Markdown {
 
     function manual_update_button($post_content){
         global $post;
-        
-        if ( ! current_user_can('edit_post', get_the_ID()) 
+
+        if ( ! current_user_can('edit_post', get_the_ID())
                 or ! get_post_meta($post->ID, 'mytory_md_path', true)
                 or get_post_meta($post->ID, 'mytory_md_mode', 'text')
         ) {
