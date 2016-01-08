@@ -218,7 +218,7 @@ class Mytory_Markdown {
         }else{
             $post['post_title'] = FALSE;
         }
-        $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content);
+        $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content, 1);
 
         return $post;
     }
