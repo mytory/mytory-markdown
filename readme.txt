@@ -85,6 +85,10 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 == Changelog ==
 
+= 1.5.2 =
+
+From this version, only first h1 will be moved to title input. there is bug that first h1 is moved to title and rest h1 disappear.
+
 = 1.5.1 =
 
 Backward compatibility for array literal(remove [] array literal).
