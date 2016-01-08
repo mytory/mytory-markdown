@@ -2,9 +2,9 @@
 Contributors: mytory
 Donate link: http://mytory.net/paypal-donation
 Tags: markdown, md, dropbox, github, markdown editor
-Tested up to: 4.4
+Tested up to: 4.4.1
 Requires at least: null
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,7 +62,7 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 == Screenshots ==
 
-1. Usage - paste markdown file url. In fact, any markdown file url is accepted. Although it's not Dropbox nor Github, if the file is markdown file, it is acceptable.
+1. Usage: paste markdown file url. In fact, any markdown file url is accepted. Although it's not Dropbox nor Github, if the file is markdown file, it is acceptable.
 
 ![](http://dl.dropboxusercontent.com/u/15546257/blog/mytory/mytory-markdown/animated.gif)
 
