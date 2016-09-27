@@ -2,7 +2,7 @@
 **Contributors:** mytory  
 **Donate link:** http://mytory.net/paypal-donation  
 **Tags:** markdown, md, dropbox, github, markdown editor  
-**Tested up to:** 4.4.1  
+**Tested up to:** 4.6.1  
 **Requires at least:** null  
 **Stable tag:** 1.5.2  
 **License:** GPLv2 or later  
