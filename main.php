@@ -18,7 +18,7 @@ class Mytory_Markdown {
     var $worked;
     var $debug_msg = array();
 
-    function Mytory_Markdown() {
+    function __construct() {
         add_action('plugins_loaded', array(&$this, 'plugin_init'));
         if(get_option('manual_update') != 'yes'){
             add_action('pre_get_posts', array(&$this, 'conditional_apply_markdown'));
