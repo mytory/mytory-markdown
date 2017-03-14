@@ -13,7 +13,7 @@
 
 **Notice**:
 
-(한국어 사용자들은 아래쪽에 한글로 알림을 적어 뒀습니다.)
+(If you are Korean user, see below of english. 한국어 사용자라면 영문 아래쪽의 한글 알림을 보세요.)
 
 [Dropbox disabled Public link to basic users from 2017-03-15.](https://www.dropbox.com/help/16)
 
