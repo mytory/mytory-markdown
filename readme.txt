@@ -103,20 +103,20 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 == Screenshots ==
 
 1. Usage: paste markdown file url. In fact, any markdown file url is accepted. Although it's not Dropbox nor Github, if the file is markdown file, it is acceptable.
-/legacy/mytory-markdown/
-![](https://mytory.net/legacy/mytory-markdown/animated.gif)
+
+![](https://mytory.net/uploads/legacy/mytory-markdown/animated.gif)
 
 2. GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.
 
-![](https://mytory.net/legacy/mytory-markdown/mytory-markdown-github-1.jpg)
+![](https://mytory.net/uploads/legacy/mytory-markdown/mytory-markdown-github-1.jpg)
 
 3. GitHub Usage 2: And click 'Raw' button on your markdown file page like below.
 
-![](https://mytory.net/legacy/mytory-markdown/mytory-markdown-github-2.jpg)
+![](https://mytory.net/uploads/legacy/mytory-markdown/mytory-markdown-github-2.jpg)
 
 4. GitHub Usage 3: Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site. Last, click 'Update Editor Content' button.
 
-![](https://mytory.net/legacy/mytory-markdown/mytory-markdown-github-3.jpg)
+![](https://mytory.net/uploads/legacy/mytory-markdown/mytory-markdown-github-3.jpg)
 
 == Installation ==
 
