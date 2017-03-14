@@ -11,6 +11,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
+**Notice**: [Dropbox will disable Public link to basic users after 2017-03-15.](https://www.dropbox.com/help/16) I will update this plugin for the problem. Please wait.
+
+-----
+
 This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
 
 It also provide text mode that write markdown in post edit page. Markdown text converted to html is put to editor by real-time. Text mode don't use url.
