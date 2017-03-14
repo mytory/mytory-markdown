@@ -4,7 +4,7 @@
         <td>
             <label>
                 <input class="js-mode-button" type="radio" name="mytory_md_mode"
-                    <?= $md_mode == 'url' ? 'checked' : '' ?> value="url" checked> URL
+                    <?= in_array($md_mode, array('url', '', null)) ? 'checked' : '' ?> value="url"> URL
             </label>
             <label>
                 <input class="js-mode-button" type="radio" name="mytory_md_mode" value="text"
