@@ -13,16 +13,17 @@
         </td>
     </tr>
     <tr class="js-mode  js-mode--url  hidden">
-        <th scope="row">URL</th>
+        <th scope="row"><label for="mytory-md-path">URL</label></th>
         <td>
             <input type="url" name="mytory_md_path" id="mytory-md-path" class="large-text" value="<?php echo $md_path ?>">
+            <p>You can use any URL in addition to Github.</p>
         </td>
     </tr>
     <tr class="js-mode  js-mode--text  hidden">
-        <th scope="row">Text</th>
+        <th scope="row"><label for="mytory-md-text">Text</label></th>
         <td>
             <p>First line heading is set to title.</p>
-            <textarea class="large-text" name="mytory_md_text" rows="20"><?php echo $md_text ?></textarea>
+            <textarea class="large-text" name="mytory_md_text" id="mytory-md-text" rows="20"><?php echo $md_text ?></textarea>
         </td>
     </tr>
     <tr class="js-mode js-mode--url hidden">
@@ -42,22 +43,19 @@
         });
         $('.js-mode-button:checked').click();
 
-        $('[name=mytory_md_text]').keyup(function(){
+        $('[name=mytory_md_text]').bind('keyup blur', function(){
             var content = marked($(this).val());
             var title = '';
             var obj;
             if(content.substr(0, 3) == '<h1'){
                 var tmp = content.split("\n");
-                console.log('tmp', tmp);
                 title = $(tmp.shift()).text();
                 content = tmp.join("\n");
             }
             obj = {
                 'post_title': title,
                 'post_content': content
-            }
-            console.log(obj.post_title);
-            console.log(obj.post_content);
+            };
             mytory_markdown_set_content(obj);
         });
 
