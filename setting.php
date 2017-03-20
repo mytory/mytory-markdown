@@ -133,8 +133,6 @@
         } else {
             $('[name=auto_update_only_writer_visits], [name=auto_update_per]').parents('tr').show();
 
-            console.log($('[name=auto_update_only_writer_visits]:checked').val());
-
             // If auto update only writer visits, auto update per setting is not needed.
             if ($('[name=auto_update_only_writer_visits]:checked').val() == 'y') {
                 $('[name=auto_update_per]').parents('tr').hide();

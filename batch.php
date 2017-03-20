@@ -81,8 +81,6 @@
                    href="options-general.php?page=mytory-markdown-batch-update&action=undo"><?php _e('Undo',
                         'mytory-markdown') ?></a>
             <?php } ?>
-
-            <?php var_dump($wp_query->post_count); ?>
         </p>
     </form>
 
