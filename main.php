@@ -48,7 +48,8 @@ class Mytory_Markdown
         if (!in_array($hook, array('post.php', 'post-new.php'))) {
             return;
         }
-        wp_enqueue_script('mytory-markdown-script', plugins_url('js/script.js', __FILE__), array('jquery'), $this->version, true);
+        wp_enqueue_script('mytory-markdown-script', plugins_url('js/script.js', __FILE__), array('jquery'),
+            $this->version, true);
     }
 
     function plugin_init()
@@ -501,14 +502,25 @@ class Mytory_Markdown
         if (!current_user_can('activate_plugins')) {
             return null;
         }
-        add_submenu_page('options-general.php', 'Mytory Markdown Setting', 'Mytory Markdown', 'activate_plugins',
-            'mytory-markdown',
+        add_submenu_page('options-general.php', 'Mytory Markdown: ' . __('Settings', 'mytory-markdown'),
+            'Mytory Markdown: <span style="white-space: nowrap;">' . __('Settings', 'mytory-markdown') . '</span>',
+            'activate_plugins', 'mytory-markdown',
             array(&$this, 'print_setting_page'));
+
+        add_submenu_page('options-general.php', 'Mytory Markdown: ' . __('URL Batch replace', 'mytory-markdown'),
+            'Mytory Markdown: ' . __('URL Batch replace', 'mytory-markdown'),
+            'activate_plugins', 'mytory-markdown-batch-update',
+            array(&$this, 'print_batch_update_page'));
     }
 
     function print_setting_page()
     {
         include "setting.php";
+    }
+
+    function print_batch_update_page()
+    {
+        include "batch.php";
     }
 
     function manual_update_button($post_content)

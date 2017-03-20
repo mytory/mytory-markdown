@@ -265,6 +265,10 @@ class Markdown_Parser
     var $escape_chars = '\`*_{}[]()>#+-.!';
     var $escape_chars_re;
 
+    function __construct()
+    {
+        $this->Markdown_Parser();
+    }
 
     function Markdown_Parser()
     {
@@ -1810,6 +1814,12 @@ class MarkdownExtra_Parser extends Markdown_Parser
 
 
     ### Parser Implementation ###
+
+    /** @noinspection PhpMissingParentConstructorInspection */
+    function __construct()
+    {
+        $this->MarkdownExtra_Parser();
+    }
 
     function MarkdownExtra_Parser()
     {

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mytory Markdown 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-20 14:20+0900\n"
-"PO-Revision-Date: 2017-03-20 14:21+0900\n"
+"POT-Creation-Date: 2017-03-20 16:01+0900\n"
+"PO-Revision-Date: 2017-03-20 16:01+0900\n"
 "Last-Translator: An, Hyeong-woo <mytory@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko_KR\n"
@@ -32,11 +32,11 @@ msgstr "업데이트"
 msgid "Mytory Markdown Setting"
 msgstr "Mytory Markdown 설정"
 
-#: setting.php:19 batch.php:7
+#: setting.php:19
 msgid "Auto update per x visits"
 msgstr "해당 글 x회 방문마다 자동 갱신"
 
-#: setting.php:25 batch.php:13
+#: setting.php:25
 msgid ""
 "This feature is for site traffic, too. If you check y to above 'auto update "
 "only when writer (or admin) visits', this feature don't be applied."
@@ -76,25 +76,64 @@ msgstr "이게 맘에 드시면 워드프레스 플러그인 사이트에서 추
 msgid "If you like this plugin, please donate :)"
 msgstr "이게 맘에 드시면, 후원 부탁드릴 게요 :)"
 
-#: main.php:393
+#: main.php:394
 msgid "Network Error! HTTP STATUS is "
 msgstr "네트워크 에러! HTTP 상태 : "
 
-#: main.php:399
+#: main.php:400
 msgid "Network Error! Maybe, connection error."
 msgstr "네트워크 에러! 인터넷 연결이 안 됩니다."
 
-#: main.php:456
+#: main.php:457
 msgid "Markdown File Path"
 msgstr "마크다운 파일 경로"
 
-#: main.php:529
+#: main.php:505 main.php:506
+msgid "Settings"
+msgstr "설정"
+
+#: main.php:510 main.php:511 batch.php:3
+msgid "URL Batch replace"
+msgstr "URL 일괄 변환"
+
+#: main.php:541
 msgid "Manual Update with Mytory Markdown"
 msgstr "Mytory Markdown으로 수동 업데이트"
 
-#: batch.php:2
-msgid "Mytory Markdown Batch Update"
-msgstr "Mytory Markdown 일괄 갱신"
+#: batch.php:34 batch.php:37
+msgid "Change from"
+msgstr "이 문자열을:"
+
+#: batch.php:39
+msgid "Above is a string that extracted common substring from markdown paths."
+msgstr "위 문자열은 마크다운 파일 경로에서 공통된 부분을 뽑은 것입니다."
+
+#: batch.php:44 batch.php:47
+msgid "Change to"
+msgstr "이 문자열로:"
+
+#: batch.php:52
+msgid "Convert"
+msgstr "변환"
+
+#: batch.php:57
+msgid "Reference: Your Markdown URL List"
+msgstr "참고: 마크다운 URL 목록"
+
+#: batch.php:71
+msgid ""
+"I think the '/' is missing at the end of the string, is that what you "
+"intended?"
+msgstr "맨 뒤에 /가 빠진 것 같은데, 의도하신 건가요?"
+
+#: batch.php:74
+msgid ""
+"You seem to have put a '/' at the end of the string, is that what you "
+"intended?"
+msgstr "맨 뒤에 /를 더 넣을 것 같은데, 의도하신 건가요?"
+
+#~ msgid "Mytory Markdown Batch Update"
+#~ msgstr "Mytory Markdown 일괄 갱신"
 
 #~ msgid "Please fill the markdown file URL."
 #~ msgstr "마크다운 파일 URL를 채워 주세요."
