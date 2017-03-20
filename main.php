@@ -10,15 +10,15 @@ Author URI: http://mytory.net
 
 class Mytory_Markdown
 {
-
-    var $error = array(
+    public $version = '1.5.3';
+    protected $error = array(
         'status' => false,
         'msg' => '',
     );
 
-    var $post;
-    var $worked;
-    var $debug_msg = array();
+    protected $post;
+    protected $worked;
+    protected $debug_msg = array();
 
     function __construct()
     {
@@ -37,10 +37,10 @@ class Mytory_Markdown
         add_action('add_meta_boxes', array(&$this, 'register_meta_box'));
         add_action('save_post', array(&$this, 'update_post'));
         add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
+        add_action('wp_ajax_mytory_md_convert_in_text_mode', array(&$this, 'convert_in_text_mode'));
         add_action('admin_menu', array(&$this, 'add_menu'));
         add_action('admin_init', array(&$this, 'register_settings'));
         add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
-
     }
 
     function enqueue_scripts($hook)
@@ -48,7 +48,7 @@ class Mytory_Markdown
         if (!in_array($hook, array('post.php', 'post-new.php'))) {
             return;
         }
-        wp_enqueue_script('marked', plugin_dir_url(__FILE__) . 'js/marked.min.js', array(), '0.3.5', true);
+        wp_enqueue_script('mytory-markdown-script', plugins_url('js/script.js', __FILE__), array('jquery'), $this->version, true);
     }
 
     function plugin_init()
@@ -220,19 +220,7 @@ class Mytory_Markdown
             return false;
         }
 
-        if (!function_exists('Markdown')) {
-            include_once 'markdown.php';
-        }
-
-        $content = Markdown($md_content);
-        $post = array();
-        preg_match('/<h1>(.*)<\/h1>/', $content, $matches);
-        if (!empty($matches)) {
-            $post['post_title'] = $matches[1];
-        } else {
-            $post['post_title'] = false;
-        }
-        $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content, 1);
+        $post = $this->_convert_md_to_post($md_content);
 
         return $post;
     }
@@ -545,6 +533,45 @@ class Mytory_Markdown
         ob_end_clean();
 
         return $manual_update_button_html . $post_content . $manual_update_button_html;
+    }
+
+    /**
+     * When it use text mode.
+     */
+    function convert_in_text_mode()
+    {
+        $post = $this->_convert_md_to_post($_POST['content']);
+        $response = array(
+            'error' => false,
+            'error_msg' => '',
+            'post_title' => $post['post_title'],
+            'post_content' => $post['post_content'],
+        );
+        echo json_encode($response);
+        die();
+    }
+
+    /**
+     * @param $md_content
+     * @return array
+     */
+    private function _convert_md_to_post($md_content)
+    {
+        if (!function_exists('Markdown')) {
+            include_once 'markdown.php';
+        }
+
+        $content = Markdown($md_content);
+        $post = array();
+        $matches = array();
+        preg_match('/<h1>(.*)<\/h1>/', $content, $matches);
+        if (!empty($matches)) {
+            $post['post_title'] = $matches[1];
+        } else {
+            $post['post_title'] = false;
+        }
+        $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content, 1);
+        return $post;
     }
 }
 
