@@ -540,12 +540,16 @@ class Mytory_Markdown
      */
     function convert_in_text_mode()
     {
+        // Because Wordpress escape all $_POST variable. So, stripslashes again.
+        $_POST = stripslashes_deep($_POST);
+
         $post = $this->_convert_md_to_post($_POST['content']);
         $response = array(
             'error' => false,
             'error_msg' => '',
             'post_title' => $post['post_title'],
             'post_content' => $post['post_content'],
+            'raw' => $_POST['content'],
         );
         echo json_encode($response);
         die();
