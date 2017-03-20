@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: Mytory Markdown
 Description: This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content. It also provide real-time conversion editor. This feature don't need dropbox url. You can directly write markdown in editing page and see real-time conversion.
@@ -7,10 +8,11 @@ Version: 1.5.3
 Author URI: http://mytory.net
 */
 
-class Mytory_Markdown {
+class Mytory_Markdown
+{
 
     var $error = array(
-        'status' => FALSE,
+        'status' => false,
         'msg' => '',
     );
 
@@ -18,15 +20,17 @@ class Mytory_Markdown {
     var $worked;
     var $debug_msg = array();
 
-    function __construct() {
+    function __construct()
+    {
         add_action('plugins_loaded', array(&$this, 'plugin_init'));
-        if(get_option('manual_update') != 'yes'){
+        if (get_option('manual_update') != 'yes') {
             add_action('pre_get_posts', array(&$this, 'conditional_apply_markdown'));
-        }else{
+        } else {
             add_filter('the_content', array(&$this, 'manual_update_button'));
         }
-        if(isset($_POST['mytory_markdown_manual_update'])
-                && $_POST['mytory_markdown_manual_update'] == 'do'){
+        if (isset($_POST['mytory_markdown_manual_update'])
+            && $_POST['mytory_markdown_manual_update'] == 'do'
+        ) {
             add_action('pre_get_posts', array(&$this, 'apply_markdown'));
         }
         add_filter('the_content', array(&$this, 'attach_error_msg'));
@@ -39,26 +43,29 @@ class Mytory_Markdown {
 
     }
 
-    function enqueue_scripts($hook) {
-        if ( ! in_array($hook, array('post.php', 'post-new.php'))) {
+    function enqueue_scripts($hook)
+    {
+        if (!in_array($hook, array('post.php', 'post-new.php'))) {
             return;
         }
-        wp_enqueue_script('marked', plugin_dir_url( __FILE__ ) . 'js/marked.min.js', array(), '0.3.5', true);
+        wp_enqueue_script('marked', plugin_dir_url(__FILE__) . 'js/marked.min.js', array(), '0.3.5', true);
     }
 
-    function plugin_init() {
-        load_plugin_textdomain('mytory-markdown', false, dirname(plugin_basename( __FILE__ )) .'/lang' );
+    function plugin_init()
+    {
+        load_plugin_textdomain('mytory-markdown', false, dirname(plugin_basename(__FILE__)) . '/lang');
     }
 
-    function conditional_apply_markdown($query){
-        if($this->worked == true){
+    function conditional_apply_markdown($query)
+    {
+        if ($this->worked == true) {
             return null;
         }
         $this->worked = true;
 
         $auto_update_only_writer_visits = get_option('auto_update_only_writer_visits');
 
-        if($auto_update_only_writer_visits == 'y' AND ! current_user_can('edit_posts')){
+        if ($auto_update_only_writer_visits == 'y' AND !current_user_can('edit_posts')) {
             $this->debug_msg[] = "Auto update only writer or admin visits is Y and current user can't edit posts. So don't work.";
             return null;
         }
@@ -71,7 +78,8 @@ class Mytory_Markdown {
      * @param $query
      * @return string
      */
-    public function apply_markdown($query) {
+    public function apply_markdown($query)
+    {
 
         $auto_update_only_writer_visits = get_option('auto_update_only_writer_visits');
 
@@ -84,64 +92,68 @@ class Mytory_Markdown {
         $this->debug_msg[] = ob_get_contents();
         ob_end_clean();
 
-        if($query->query_vars['p']){
+        if ($query->query_vars['p']) {
             // post인 경우
             $this->post = get_post($query->query_vars['p']);
             $this->debug_msg[] = "This is post.";
 
-        }else if($query->query_vars['page_id']){
-            // page인 경우
-            $this->post = get_post($query->query_vars['page_id']);
-            $this->debug_msg[] = "This is page.";
+        } else {
+            if ($query->query_vars['page_id']) {
+                // page인 경우
+                $this->post = get_post($query->query_vars['page_id']);
+                $this->debug_msg[] = "This is page.";
 
-        }else if($query->query_vars['pagename'] OR $query->query_vars['name']){
+            } else {
+                if ($query->query_vars['pagename'] OR $query->query_vars['name']) {
 
-            // page인 경우 OR slug 형태 주소인 경우.
-            $slug = ($query->query_vars['pagename'] ? $query->query_vars['pagename'] : $query->query_vars['name']);
-            $posts = get_posts(array('post_type' => 'any','name' => $slug));
-            $this->debug_msg[] = "This is page or slug type permalink. Continue.";
+                    // page인 경우 OR slug 형태 주소인 경우.
+                    $slug = ($query->query_vars['pagename'] ? $query->query_vars['pagename'] : $query->query_vars['name']);
+                    $posts = get_posts(array('post_type' => 'any', 'name' => $slug));
+                    $this->debug_msg[] = "This is page or slug type permalink. Continue.";
 
-            if(isset($posts[0])){
-                $this->post = $posts[0];
-            }else{
-                $this->debug_msg[] = "There is not post/page that has slug '{$slug}'. So don't work.";
-                return null;
+                    if (isset($posts[0])) {
+                        $this->post = $posts[0];
+                    } else {
+                        $this->debug_msg[] = "There is not post/page that has slug '{$slug}'. So don't work.";
+                        return null;
+                    }
+
+                } else {
+                    // post도 page도 아닌 경우
+                    $this->debug_msg[] = "This is not post/page. So don't work.";
+                    return null;
+                }
             }
-
-        }else{
-            // post도 page도 아닌 경우
-            $this->debug_msg[] = "This is not post/page. So don't work.";
-            return null;
         }
 
-        if( ! is_single() and ! is_page()){
+        if (!is_single() and !is_page()) {
             // single이 아닌 경우
             $this->debug_msg[] = "This is not single page. So don't work.";
             return null;
         }
 
         // 'Auto update per x visits' feature work only when 'Auto update only writer visits' feature disabled.
-        if($auto_update_only_writer_visits != 'y'){
+        if ($auto_update_only_writer_visits != 'y') {
 
             // Auto update per x visits.
             $auto_update_per = get_option('auto_update_per');
-            if( $auto_update_per !== FALSE ){
-                $visits_count = get_post_meta($this->post->ID, 'mytory_md_visits_count', TRUE);
-                if( ! $visits_count){
+            if ($auto_update_per !== false) {
+                $visits_count = get_post_meta($this->post->ID, 'mytory_md_visits_count', true);
+                if (!$visits_count) {
                     $visits_count = 0;
                 }
-                update_post_meta( $this->post->ID, 'mytory_md_visits_count', $visits_count + 1);
+                update_post_meta($this->post->ID, 'mytory_md_visits_count', $visits_count + 1);
                 $visits_count++;
-                if($visits_count % $auto_update_per !== 0){
+                if ($visits_count % $auto_update_per !== 0) {
                     $this->debug_msg[] = "'Auto update per' option is enabled. And count is not full. So don't work.";
                     return null;
                 }
             }
         }
 
-        $markdown_path = get_post_meta($this->post->ID, 'mytory_md_path', TRUE);
+        $markdown_path = get_post_meta($this->post->ID, 'mytory_md_path', true);
 
-        if( ! $markdown_path){
+        if (!$markdown_path) {
             $this->debug_msg[] = "This don't has markdown path. So don't work.";
             return null;
         }
@@ -152,13 +164,13 @@ class Mytory_Markdown {
             update_post_meta($this->post->ID, '_mytory_markdown_etag', $this->_get_etag($markdown_path));
             $md_post = $this->_get_post($markdown_path);
 
-            if ($this->error['status'] === TRUE) {
-                if(current_user_can('edit_posts')){
+            if ($this->error['status'] === true) {
+                if (current_user_can('edit_posts')) {
                     return "<p>{$this->error['msg']}</p>" . $md_post['post_content'];
-                }else{
+                } else {
                     return $md_post['post_content'];
                 }
-            }else{
+            } else {
                 $postarr = array(
                     'ID' => $this->post->ID,
                     'post_title' => $md_post['post_title'],
@@ -166,7 +178,7 @@ class Mytory_Markdown {
                 );
                 wp_update_post($postarr);
             }
-        }else{
+        } else {
             $this->debug_msg[] = "Etag was not changed. So content has not been updated.";
         }
         return null;
@@ -177,11 +189,12 @@ class Mytory_Markdown {
      * @param $post_content
      * @return string
      */
-    public function attach_error_msg($post_content){
-        if ($this->error['status'] === TRUE AND current_user_can('edit_posts')) {
-            $post_content =  "<p>{$this->error['msg']}</p>" . $post_content;
+    public function attach_error_msg($post_content)
+    {
+        if ($this->error['status'] === true AND current_user_can('edit_posts')) {
+            $post_content = "<p>{$this->error['msg']}</p>" . $post_content;
         }
-        if ( ! empty($this->debug_msg) AND current_user_can('edit_posts') AND get_option('debug_msg') == 'yes'){
+        if (!empty($this->debug_msg) AND current_user_can('edit_posts') AND get_option('debug_msg') == 'yes') {
             $debug = '<ul>';
             foreach ($this->debug_msg as $msg) {
                 $debug .= "<li>mytory markdown debug: {$msg}</li>";
@@ -199,11 +212,12 @@ class Mytory_Markdown {
      * @param $markdown_path
      * @return boolean | string
      */
-    private function _get_post($markdown_path){
+    private function _get_post($markdown_path)
+    {
         $md_content = $this->_file_get_contents($markdown_path);
 
-        if($md_content === FALSE){
-            return FALSE;
+        if ($md_content === false) {
+            return false;
         }
 
         if (!function_exists('Markdown')) {
@@ -213,17 +227,18 @@ class Mytory_Markdown {
         $content = Markdown($md_content);
         $post = array();
         preg_match('/<h1>(.*)<\/h1>/', $content, $matches);
-        if( ! empty($matches)){
+        if (!empty($matches)) {
             $post['post_title'] = $matches[1];
-        }else{
-            $post['post_title'] = FALSE;
+        } else {
+            $post['post_title'] = false;
         }
         $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content, 1);
 
         return $post;
     }
 
-    public function get_post_content_ajax(){
+    public function get_post_content_ajax()
+    {
 
         ini_set('display_errors', 1);
         error_reporting(E_ERROR | E_WARNING);
@@ -232,9 +247,9 @@ class Mytory_Markdown {
 
         $etag_new = $this->_get_etag($md_path);
 
-        if( ! $etag_new){
+        if (!$etag_new) {
             $res = array(
-                'error' => TRUE,
+                'error' => true,
                 'error_msg' => $this->error['msg'],
                 'post_title' => 'error',
                 'post_content' => 'error',
@@ -248,16 +263,16 @@ class Mytory_Markdown {
 
         $md_post = $this->_get_post($md_path);
 
-        if( ! $md_post){
+        if (!$md_post) {
             $res = array(
-                'error' => TRUE,
+                'error' => true,
                 'error_msg' => $this->error['msg'],
                 'post_title' => 'error',
                 'post_content' => 'error',
             );
-        }else{
+        } else {
             $res = array(
-                'error' => FALSE,
+                'error' => false,
                 'error_msg' => '',
                 'post_title' => $md_post['post_title'],
                 'post_content' => $md_post['post_content'],
@@ -273,7 +288,8 @@ class Mytory_Markdown {
      * @param  string $url
      * @return boolean
      */
-    private function _need_to_save($url) {
+    private function _need_to_save($url)
+    {
         $post = $this->post;
 
         // If not single page, don't connect for prevent time-wasting.
@@ -281,24 +297,24 @@ class Mytory_Markdown {
         // 싱글 페이지가 아니라면 굳이 접속해서 시간낭비할 거 없이 
         // 바로 저장된 HTML을 뿌려줄 수 있도록 save할 필요 없다고 신호를 준다.
         if (!is_single() AND !is_page()) {
-            return FALSE;
+            return false;
         }
 
-        $etag_saved = get_post_meta($post->ID, '_mytory_markdown_etag', TRUE);
+        $etag_saved = get_post_meta($post->ID, '_mytory_markdown_etag', true);
 
         if ($etag_saved) {
             $etag_remote = $this->_get_etag($url);
 
             // if there is not etag, don't need to save.
-            if ($etag_remote === NULL) {
-                return FALSE;
+            if ($etag_remote === null) {
+                return false;
             }
 
             // if etag different each other, need to save
             return ($etag_saved != $etag_remote);
         } else {
             // if no cache, need to save
-            return TRUE;
+            return true;
         }
     }
 
@@ -307,7 +323,8 @@ class Mytory_Markdown {
      * @param  string $url
      * @return string
      */
-    private function _get_etag($url) {
+    private function _get_etag($url)
+    {
         $header = $this->_get_header_from_url($url);
         $header = $this->_http_parse_headers($header);
 
@@ -319,7 +336,7 @@ class Mytory_Markdown {
         if (!empty($header['etag'])) {
             return $header['etag'];
         } else {
-            return NULL;
+            return null;
         }
     }
 
@@ -328,27 +345,28 @@ class Mytory_Markdown {
      * @param  string $url dropbox public url
      * @return string
      */
-    private function _get_header_from_url($url) {
-        if( ! function_exists('curl_init') ){
+    private function _get_header_from_url($url)
+    {
+        if (!function_exists('curl_init')) {
             $this->error = array(
-                'status' => TRUE,
+                'status' => true,
                 'msg' => 'Mytory Markdown plugin need PHP cURL module. But, your Server has not the module. So you cannot use this plugin. I\'m Sorry. If you can, request to install cURL module to your hosting service. Common hosting service provides cURL module.',
             );
-            return FALSE;
+            return false;
         }
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HEADER, TRUE);
-        curl_setopt($curl, CURLOPT_NOBODY, TRUE);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        if(!ini_get('open_basedir')){
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($curl, CURLOPT_HEADER, true);
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        if (!ini_get('open_basedir')) {
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         }
         $header = curl_exec($curl);
 
-        if( ! $this->_check_curl_error($curl)){
-            return FALSE;
+        if (!$this->_check_curl_error($curl)) {
+            return false;
         }
 
         return $header;
@@ -359,41 +377,43 @@ class Mytory_Markdown {
      * @param  string $url dropbox public url
      * @return string
      */
-    private function _file_get_contents($url) {
+    private function _file_get_contents($url)
+    {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HEADER, FALSE);
-        curl_setopt($curl, CURLOPT_NOBODY, FALSE);
-        if(!ini_get('open_basedir')){
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_NOBODY, false);
+        if (!ini_get('open_basedir')) {
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $content = curl_exec($curl);
 
-        if( ! $this->_check_curl_error($curl)){
-            return FALSE;
+        if (!$this->_check_curl_error($curl)) {
+            return false;
         }
 
         return $content;
     }
 
-    private function _check_curl_error($curl){
+    private function _check_curl_error($curl)
+    {
         $curl_info = curl_getinfo($curl);
-        if($curl_info['http_code'] != '200'){
+        if ($curl_info['http_code'] != '200') {
             $this->error = array(
-                'status' => TRUE,
+                'status' => true,
                 'msg' => __('Network Error! HTTP STATUS is ', 'mytory-markdown') . $curl_info['http_code'],
             );
-            if($curl_info['http_code'] == '404'){
+            if ($curl_info['http_code'] == '404') {
                 $this->error['msg'] = 'Incorrect URL. File not found.';
             }
-            if($curl_info['http_code'] == 0){
+            if ($curl_info['http_code'] == 0) {
                 $this->error['msg'] = __('Network Error! Maybe, connection error.', 'mytory-markdown');
             }
             $this->error['curl_info'] = $curl_info;
-            return FALSE;
+            return false;
         }
-        return TRUE;
+        return true;
     }
 
     /**
@@ -402,7 +422,8 @@ class Mytory_Markdown {
      * @param  string $raw_headers
      * @return array
      */
-    private function _http_parse_headers($raw_headers) {
+    private function _http_parse_headers($raw_headers)
+    {
         $headers = array();
         $key = ''; // [+]
 
@@ -410,9 +431,9 @@ class Mytory_Markdown {
             $h = explode(':', $h, 2);
 
             if (isset($h[1])) {
-                if (!isset($headers[$h[0]]))
+                if (!isset($headers[$h[0]])) {
                     $headers[$h[0]] = trim($h[1]);
-                elseif (is_array($headers[$h[0]])) {
+                } elseif (is_array($headers[$h[0]])) {
                     // $tmp = array_merge($headers[$h[0]], array(trim($h[1]))); // [-]
                     // $headers[$h[0]] = $tmp; // [-]
                     $headers[$h[0]] = array_merge($headers[$h[0]], array(trim($h[1]))); // [+]
@@ -426,9 +447,13 @@ class Mytory_Markdown {
             } else // [+]
             { // [+]
                 if (substr($h[0], 0, 1) == "\t") // [+]
-                $headers[$key] .= "\r\n\t" . trim($h[0]); // [+]
+                {
+                    $headers[$key] .= "\r\n\t" . trim($h[0]);
+                } // [+]
                 elseif (!$key) // [+]
-                $headers[0] = trim($h[0]);
+                {
+                    $headers[0] = trim($h[0]);
+                }
                 trim($h[0]); // [+]
             } // [+]
         }
@@ -436,7 +461,8 @@ class Mytory_Markdown {
         return $headers;
     }
 
-    function register_meta_box() {
+    function register_meta_box()
+    {
         add_meta_box(
             'mytory-markdown-path',
             __('Markdown File Path', 'mytory-markdown'),
@@ -444,59 +470,66 @@ class Mytory_Markdown {
         );
     }
 
-    function meta_box_inner() {
+    function meta_box_inner()
+    {
         $md_path = '';
         $md_mode = 'url';
         $md_text = '';
-        if(isset($_GET['post'])){
-            $md_path = get_post_meta($_GET['post'], 'mytory_md_path', TRUE);
-            $md_mode = get_post_meta($_GET['post'], 'mytory_md_mode', TRUE);
-            $md_text = get_post_meta($_GET['post'], 'mytory_md_text', TRUE);
+        if (isset($_GET['post'])) {
+            $md_path = get_post_meta($_GET['post'], 'mytory_md_path', true);
+            $md_mode = get_post_meta($_GET['post'], 'mytory_md_mode', true);
+            $md_text = get_post_meta($_GET['post'], 'mytory_md_text', true);
         }
         include 'meta-box.php';
     }
 
-    function update_post($post_id) {
+    function update_post($post_id)
+    {
         if (!current_user_can('edit_post', $post_id)) {
             return null;
         }
 
         // 데이터 저장
-        if(isset($_POST['mytory_md_path'])){
+        if (isset($_POST['mytory_md_path'])) {
             update_post_meta($post_id, 'mytory_md_path', $_POST['mytory_md_path']);
             update_post_meta($post_id, 'mytory_md_text', $_POST['mytory_md_text']);
             update_post_meta($post_id, 'mytory_md_mode', $_POST['mytory_md_mode']);
         }
     }
 
-    function register_settings() { // whitelist options
-        if ( ! current_user_can('activate_plugins') ){
+    function register_settings()
+    { // whitelist options
+        if (!current_user_can('activate_plugins')) {
             return null;
         }
-        register_setting( 'mytory-markdown-option-group', 'auto_update_only_writer_visits' );
-        register_setting( 'mytory-markdown-option-group', 'auto_update_per' );
-        register_setting( 'mytory-markdown-option-group', 'debug_msg' );
-        register_setting( 'mytory-markdown-option-group', 'manual_update' );
+        register_setting('mytory-markdown-option-group', 'auto_update_only_writer_visits');
+        register_setting('mytory-markdown-option-group', 'auto_update_per');
+        register_setting('mytory-markdown-option-group', 'debug_msg');
+        register_setting('mytory-markdown-option-group', 'manual_update');
     }
 
-    function add_menu() {
-        if ( ! current_user_can('activate_plugins') ){
+    function add_menu()
+    {
+        if (!current_user_can('activate_plugins')) {
             return null;
         }
-        add_submenu_page('options-general.php', 'Mytory Markdown Setting', 'Mytory Markdown', 'activate_plugins', 'mytory-markdown',
-                array(&$this, 'print_setting_page'));
+        add_submenu_page('options-general.php', 'Mytory Markdown Setting', 'Mytory Markdown', 'activate_plugins',
+            'mytory-markdown',
+            array(&$this, 'print_setting_page'));
     }
 
-    function print_setting_page(){
+    function print_setting_page()
+    {
         include "setting.php";
     }
 
-    function manual_update_button($post_content){
+    function manual_update_button($post_content)
+    {
         global $post;
 
-        if ( ! current_user_can('edit_post', get_the_ID())
-                or ! get_post_meta($post->ID, 'mytory_md_path', true)
-                or get_post_meta($post->ID, 'mytory_md_mode', 'text')
+        if (!current_user_can('edit_post', get_the_ID())
+            or !get_post_meta($post->ID, 'mytory_md_path', true)
+            or get_post_meta($post->ID, 'mytory_md_mode', 'text')
         ) {
             return $post_content;
         }
