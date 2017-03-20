@@ -3,6 +3,15 @@
     <h2>Mytory Markdown: <?php _e('URL Batch replace', 'mytory-markdown') ?></h2>
 
     <?php
+
+    if (!empty($message)) { ?>
+        <div id="setting-error-settings_updated" class="updated settings-error notice is-dismissible">
+            <p><strong><?= $message ?></strong></p>
+            <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e('Close.', 'mytory-markdown') ?></span></button>
+        </div>
+    <?php } ?>
+
+    <?php
     // help paragraph
     if (!function_exists('Markdown')) {
         include_once 'markdown.php';
@@ -36,7 +45,8 @@
                     <input class="large-text" type="text" name="change_from" value="<?= $recommend_change_from ?>"
                            title="<?php esc_attr_e(__('Change from')) ?>"/>
                     <?php if ($recommend_change_from) { ?>
-                        <p><?php _e('Above is a string that extracted common substring from markdown paths.', 'mytory-markdown') ?></p>
+                        <p><?php _e('Above is a string that extracted common substring from markdown paths.',
+                                'mytory-markdown') ?></p>
                     <?php } ?>
                 </td>
             </tr>

@@ -520,6 +520,25 @@ class Mytory_Markdown
 
     function print_batch_update_page()
     {
+        if (!empty($_POST)) {
+            $change_from = $_POST['change_from'];
+            $change_to = $_POST['change_to'];
+            $wp_query = new WP_Query(array(
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                    array(
+                        'meta_key' => 'mytory_md_path',
+                    ),
+                ),
+            ));
+            foreach ($wp_query->posts as $post) {
+                $md_path = get_post_meta($post->ID, 'mytory_md_path', true);
+                $new_md_path = str_replace($change_from, $change_to, $md_path);
+                update_post_meta($post->ID, 'mytory_md_path_old', $md_path);
+                update_post_meta($post->ID, 'mytory_md_path', $new_md_path);
+            }
+            $message = __('Complete.', 'mytory-markdown');
+        }
         include "batch.php";
     }
 
