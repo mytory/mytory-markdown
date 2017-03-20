@@ -27,6 +27,8 @@
             <p>First line heading is set to title.</p>
             <textarea class="large-text" name="mytory_md_text" id="mytory-md-text"
                       rows="20"><?php echo $md_text ?></textarea>
+            <p><button type="button" class="button js-convert-in-text-mode"><?php _e('Update Editor Content',
+                        'mytory-markdown') ?></button></p>
         </td>
     </tr>
     <tr class="js-mode js-mode--url hidden">
