@@ -518,20 +518,39 @@ class Mytory_Markdown
         include "setting.php";
     }
 
+    function get_posts_has_md_path()
+    {
+        $wp_query = new WP_Query(array(
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => 'mytory_md_path',
+                    'value' => '',
+                    'compare' => '!=',
+                ),
+            ),
+        ));
+        return $wp_query->posts;
+    }
+
     function print_batch_update_page()
     {
+        // 실행 취소한 경우
+        if (!empty($_GET['action']) and $_GET['action'] == 'undo') {
+            foreach ($this->get_posts_has_md_path() as $post) {
+                $old = get_post_meta($post->ID, 'mytory_md_path_old', true);
+                if (!$old) { continue; }
+                update_post_meta($post->ID, 'mytory_md_path', $old);
+                delete_post_meta($post->ID, 'mytory_md_path_old');
+            }
+            $message = __('Undo', 'mytory-markdown') . ' ' . __('Complete.', 'mytory-markdown');
+        }
+
         if (!empty($_POST)) {
             $change_from = $_POST['change_from'];
             $change_to = $_POST['change_to'];
-            $wp_query = new WP_Query(array(
-                'posts_per_page' => -1,
-                'meta_query' => array(
-                    array(
-                        'meta_key' => 'mytory_md_path',
-                    ),
-                ),
-            ));
-            foreach ($wp_query->posts as $post) {
+
+            foreach ($this->get_posts_has_md_path() as $post) {
                 $md_path = get_post_meta($post->ID, 'mytory_md_path', true);
                 $new_md_path = str_replace($change_from, $change_to, $md_path);
                 update_post_meta($post->ID, 'mytory_md_path_old', $md_path);

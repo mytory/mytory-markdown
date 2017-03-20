@@ -7,9 +7,12 @@
     if (!empty($message)) { ?>
         <div id="setting-error-settings_updated" class="updated settings-error notice is-dismissible">
             <p><strong><?= $message ?></strong></p>
-            <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e('Close.', 'mytory-markdown') ?></span></button>
+            <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e('Close.',
+                        'mytory-markdown') ?></span></button>
         </div>
-    <?php } ?>
+    <?php
+    exit;
+    } ?>
 
     <?php
     // help paragraph
@@ -58,9 +61,29 @@
                 </td>
             </tr>
         </table>
-        <?php
-        submit_button(__('Convert', 'mytory-markdown'));
-        ?>
+        <p class="submit">
+            <input type="submit" name="submit" id="submit" class="button button-primary"
+                   value="<?php _e('Convert', 'mytory-markdown') ?>">
+            <?php
+            $wp_query = new WP_Query(array(
+                'meta_query' => array(
+                    array(
+                        'key' => 'mytory_md_path_old',
+                        'value' => '',
+                        'compare' => '!=',
+                    ),
+                ),
+            ));
+            if ($wp_query->post_count > 0) { ?>
+                <a title="<?php _e('Only one step can be undo.', 'mytory-markdown') ?>" style="float: right;"
+                   onclick="return confirm('<?php _e('Really?', 'mytory-markdown') ?>');"
+                   class="trash"
+                   href="options-general.php?page=mytory-markdown-batch-update&action=undo"><?php _e('Undo',
+                        'mytory-markdown') ?></a>
+            <?php } ?>
+
+            <?php var_dump($wp_query->post_count); ?>
+        </p>
     </form>
 
     <div class="card" style="max-width: 100%;">
