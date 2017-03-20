@@ -4,14 +4,22 @@
 **Tags:** markdown, md, github, markdown editor  
 **Tested up to:** 4.7.3  
 **Requires at least:** null  
-**Stable tag:** 1.5.3  
+**Stable tag:** 1.6.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 
 ## Description ##
 
-**Notice**:
+**2017-03-20 Notice**:
+
+Now, you can use URL batch replace feature. You can replace root url with new one easily using this feature.
+If you've been user of Dropbox public link, replace dropbox's root url with new site url. e.g. `raw.githubusercontent.com`
+
+Thank you.
+
+
+**2017-03-15 Notice**:
 
 (If you are Korean user, see below of english. 한국어 사용자라면 영문 아래쪽의 한글 알림을 보세요.)
 
@@ -125,6 +133,13 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 ## Changelog ##
 
+### 1.6.0
+
+*** Now, you can use url batch replace feature. Go to **Settings > Mytory Markdown:** URL Batch Replace**.  
+* Dropbox API feature will be provided later.
+*** 이번부터 URL 일괄 변환 기능을 이용할 수 있습니다. **설정 > Mytory Markdown:** URL 일괄 변환** 메뉴로 가세요.  
+* 드롭박스 API를 이용한 기능은 조금만 더 기다려 주세요.
+###
 ### 1.5.3 ###
 
 * Apologizing. See update plan on description section. Dropbox removed Public link function from 2017-03-15. I plan to update in a week.
