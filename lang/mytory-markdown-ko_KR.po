@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mytory Markdown 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-11 00:46+0900\n"
-"PO-Revision-Date: 2014-09-11 00:46+0900\n"
-"Last-Translator: Ahn Hyeong-woo <mytory@gmail.com>\n"
+"POT-Creation-Date: 2017-03-20 14:20+0900\n"
+"PO-Revision-Date: 2017-03-20 14:21+0900\n"
+"Last-Translator: An, Hyeong-woo <mytory@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko_KR\n"
 "MIME-Version: 1.0\n"
@@ -13,60 +13,30 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: main.php:360
-msgid "Network Error! HTTP STATUS is "
-msgstr "네트워크 에러! HTTP 상태 : "
-
-#: main.php:366
-msgid "Network Error! Maybe, connection error."
-msgstr "네트워크 에러! 인터넷 연결이 안 됩니다."
-
-#: main.php:416
-msgid "Markdown File Path"
-msgstr "마크다운 파일 경로"
-
-#: main.php:471
-msgid "Manual Update with Mytory Markdown"
-msgstr "Mytory Markdown으로 수동 업데이트"
-
 #: meta-box.php:19
-msgid "Update"
-msgstr "업데이트"
+msgid "You can use any URL in addition to Github."
+msgstr "Github뿐 아니라 어느 URL이라도 사용 가능합니다."
 
-#: meta-box.php:21
+#: meta-box.php:29 meta-box.php:36
 msgid "Update Editor Content"
 msgstr "에디터 내용 갱신"
 
-#: meta-box.php:31
-msgid "Please fill the markdown file URL."
-msgstr "마크다운 파일 URL를 채워 주세요."
-
-#: meta-box.php:37 meta-box.php:39
-msgid ".js-dropbox-public-link-alert"
-msgstr ".js-dropbox-public-link-alert-ko_KR"
-
-#: meta-box.php:77
-msgid ""
-"Unknown error. Please copy error text on textarea bottom of markdown plugin "
-"url input element and send to me(mytory@gmail.com). So, I can recognize the "
-"reason for the error."
-msgstr ""
-"알 수 없는 에러. 아래쪽에 있는 텍스트 박스의 메시지를 복사해서 저에게 메일로 "
-"보내 주시면 감사하겠습니다. (mytory@gmail.com) 그러면 에러 원인을 찾을 수 있"
-"습니다."
+#: meta-box.php:34
+msgid "Update"
+msgstr "업데이트"
 
 #: setting.php:2
 msgid "Mytory Markdown Setting"
 msgstr "Mytory Markdown 설정"
 
-#: setting.php:18
+#: setting.php:19 batch.php:7
 msgid "Auto update per x visits"
 msgstr "해당 글 x회 방문마다 자동 갱신"
 
-#: setting.php:22
+#: setting.php:25 batch.php:13
 msgid ""
 "This feature is for site traffic, too. If you check y to above 'auto update "
 "only when writer (or admin) visits', this feature don't be applied."
@@ -74,30 +44,69 @@ msgstr ""
 "이 기능도 트래픽 때문에 넣은 겁니다. 만약 위에 \"글쓴이 (혹은 관리자)가 글을 "
 "볼 때만 자동 갱신\" 기능을 켰다면, 이 기능은 적용되지 않습니다."
 
-#: setting.php:39
+#: setting.php:43
 msgid "Auto update only when writer (or admin) visits"
 msgstr "글쓴이 (혹은 관리자)가 글을 볼 때만 자동 갱신"
 
-#: setting.php:48
+#: setting.php:55
 msgid "This feature is for site traffic."
 msgstr "트래픽 때문에 넣은 기능입니다."
 
-#: setting.php:60
+#: setting.php:67
 msgid "Manual update on view page"
 msgstr "보는 페이지에서 수동으로 업데이트"
 
-#: setting.php:72
+#: setting.php:80
 msgid "Post will update only when you click update button on view page."
 msgstr "보는 페이지에서 업데이트 버튼을 눌러야 글이 갱신됩니다."
 
-#: setting.php:83
+#: setting.php:92
 msgid "Print Debug Message on post/page"
 msgstr "글에서 디버그 메시지 출력"
 
-#: setting.php:95
+#: setting.php:105
 msgid "Of course, it doesn't be showed normal users."
 msgstr "물론 일반 사용자에겐 보이지 않습니다."
 
-#: setting.php:100
+#: setting.php:111
 msgid "If you like this plugin, please rate on wordpress plugin site."
 msgstr "이게 맘에 드시면 워드프레스 플러그인 사이트에서 추천 부탁드립니다."
+
+#: setting.php:115
+msgid "If you like this plugin, please donate :)"
+msgstr "이게 맘에 드시면, 후원 부탁드릴 게요 :)"
+
+#: main.php:393
+msgid "Network Error! HTTP STATUS is "
+msgstr "네트워크 에러! HTTP 상태 : "
+
+#: main.php:399
+msgid "Network Error! Maybe, connection error."
+msgstr "네트워크 에러! 인터넷 연결이 안 됩니다."
+
+#: main.php:456
+msgid "Markdown File Path"
+msgstr "마크다운 파일 경로"
+
+#: main.php:529
+msgid "Manual Update with Mytory Markdown"
+msgstr "Mytory Markdown으로 수동 업데이트"
+
+#: batch.php:2
+msgid "Mytory Markdown Batch Update"
+msgstr "Mytory Markdown 일괄 갱신"
+
+#~ msgid "Please fill the markdown file URL."
+#~ msgstr "마크다운 파일 URL를 채워 주세요."
+
+#~ msgid ".js-dropbox-public-link-alert"
+#~ msgstr ".js-dropbox-public-link-alert-ko_KR"
+
+#~ msgid ""
+#~ "Unknown error. Please copy error text on textarea bottom of markdown "
+#~ "plugin url input element and send to me(mytory@gmail.com). So, I can "
+#~ "recognize the reason for the error."
+#~ msgstr ""
+#~ "알 수 없는 에러. 아래쪽에 있는 텍스트 박스의 메시지를 복사해서 저에게 메일"
+#~ "로 보내 주시면 감사하겠습니다. (mytory@gmail.com) 그러면 에러 원인을 찾을 "
+#~ "수 있습니다."

@@ -16,9 +16,8 @@
         <th scope="row"><label for="mytory-md-path">URL</label></th>
         <td>
             <input type="url" name="mytory_md_path" id="mytory-md-path" class="large-text"
+                   title="<?php esc_attr_e(__("You can use any URL in addition to Github.", 'mytory-markdown')) ?>"
                    value="<?php echo $md_path ?>">
-
-            <p>You can use any URL in addition to Github.</p>
         </td>
     </tr>
     <tr class="js-mode  js-mode--text  hidden">
