@@ -18,6 +18,11 @@ If you've been user of Dropbox public link, replace dropbox's root url with new 
 
 Thank you.
 
+이제 URL 일괄 변환 기능을 사용할 수 있습니다. 이 기능을 이용해서 루트 URL을 새로운 URL로 손쉽게 변경할 수 있습니다.
+만약 드롭박스 퍼블릭 링크 사용자였다면, 드롭박스의 루트 URL을 `raw.githubusercontent.com` 같은 새 사이트 URL로 바꾸세요.
+
+감사합니다.
+
 
 **2017-03-15 Notice**:
 
