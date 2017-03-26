@@ -20,6 +20,7 @@ class Mytory_Markdown
     protected $worked;
     protected $debug_msg = array();
     public $markdown;
+    public $hasDropboxPublicLink;
 
     function __construct()
     {
@@ -39,11 +40,12 @@ class Mytory_Markdown
         add_action('save_post', array(&$this, 'update_post'));
         add_action('wp_ajax_mytory_md_update_editor', array(&$this, 'get_post_content_ajax'));
         add_action('wp_ajax_mytory_md_convert_in_text_mode', array(&$this, 'convert_in_text_mode'));
-        add_action('admin_menu', array(&$this, 'add_menu'));
+        add_action('admin_menu', array(&$this, 'addMenu'));
         add_action('admin_init', array(&$this, 'register_settings'));
         add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 
         $this->initMarkdownObject();
+        $this->setAboutDropboxPublicLink();
     }
 
     function enqueue_scripts($hook)
@@ -503,7 +505,7 @@ class Mytory_Markdown
         register_setting('mytory-markdown-option-group', 'mytory_markdown_engine');
     }
 
-    function add_menu()
+    function addMenu()
     {
         if (!current_user_can('activate_plugins')) {
             return null;
@@ -545,7 +547,9 @@ class Mytory_Markdown
         if (!empty($_GET['action']) and $_GET['action'] == 'undo') {
             foreach ($this->get_posts_has_md_path() as $post) {
                 $old = get_post_meta($post->ID, 'mytory_md_path_old', true);
-                if (!$old) { continue; }
+                if (!$old) {
+                    continue;
+                }
                 update_post_meta($post->ID, 'mytory_md_path', $old);
                 delete_post_meta($post->ID, 'mytory_md_path_old');
             }
@@ -654,6 +658,47 @@ class Mytory_Markdown
                 $this->markdown = new MMMarkdownExtra;
             // pass through
         }
-    }}
+    }
+
+    function alertHowToMigrate() {
+        ?>
+        <div class="notice  notice-warning  is-dismissible">
+            <?php
+            $message = sprintf('<strong>Mytory Markdown: </strong> You can migrate Dropbox Public link to Dropbox API. <a href="%s">See ‘how to’ description.</a>', menu_page_url('mytory-markdown-how-to-migrate', false));
+            ?>
+            <p><?php _e( $message, 'mytory-markdown' ); ?></p>
+        </div>
+        <?php
+    }
+
+    private function setAboutDropboxPublicLink()
+    {
+        global $wpdb;
+        $results = $wpdb->get_results("select count(*) count from {$wpdb->prefix}postmeta where meta_value like '%dropboxusercontent%' and meta_key = 'mytory_md_path' limit 1");
+        if ($results[0]->count > 0) {
+            $this->hasDropboxPublicLink = true;
+            if ($_GET['page'] != 'mytory-markdown-how-to-migrate') {
+                add_action('admin_notices', array(&$this, 'alertHowToMigrate'));
+            }
+            add_action('admin_menu', array(&$this, 'addMenuHowToMigrate'));
+        }
+    }
+
+    function addMenuHowToMigrate()
+    {
+        add_submenu_page(
+            'options-general.php',
+            'Mytory Markdown: ' . __('How to Migrate to Dropbox API', 'mytory-markdown'),
+            'Mytory Markdown: ' . __('How to Migrate to Dropbox API', 'mytory-markdown'),
+            'activate_plugins', 'mytory-markdown-how-to-migrate',
+            array(&$this, 'printHowToMigrate')
+        );
+    }
+
+    function printHowToMigrate()
+    {
+        include 'how-to-migrate.php';
+    }
+}
 
 $mytory_markdown = new Mytory_Markdown;
