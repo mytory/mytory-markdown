@@ -4,69 +4,44 @@ Donate link: http://mytory.net/paypal-donation
 Tags: markdown, md, github, markdown editor
 Tested up to: 4.7.3
 Requires at least: null
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
 
-**2017-03-20 Notice**:
+=== Now you can migrate from Public link to Dropbox API
 
-Now, you can use URL batch replace feature. You can replace root url with new one easily using this feature.
-If you've been user of Dropbox public link, replace dropbox's root url with new site url. e.g. `raw.githubusercontent.com`
+I made up Mytory Markdown for Dropbox plugin. The plugin access Dropbox using API. So I divide the plugin to Mytory Markdown for Dropbox.
+Now you can install it in plugin page. This video describe how to migrate Public link to Dropbox API.
 
-Thank you.
+Install Mytory Markdown for Dropbox and activate it. Then see a video below.
 
-이제 URL 일괄 변환 기능을 사용할 수 있습니다. 이 기능을 이용해서 루트 URL을 새로운 URL로 손쉽게 변경할 수 있습니다.
-만약 드롭박스 퍼블릭 링크 사용자였다면, 드롭박스의 루트 URL을 `raw.githubusercontent.com` 같은 새 사이트 URL로 바꾸세요.
+[Youtube https://www.youtube.com/watch?v=ZmPWMBvGuS4]
 
-감사합니다.
+If the video doesn't be show, [click this to go to how to migration video](https://www.youtube.com/watch?v=ZmPWMBvGuS4&).
 
+=== 이제 Public 링크를 드롭박스 API로 이전할 수 있습니다
 
-**2017-03-15 Notice**:
+Mytory Markdown for Dropbox 플러그인을 만들었습니다. API를 이용해서 드롭박스에 접속하는 플러그인입니다. 별도로 만들었습니다.
+지금 플러그인 페이지에서 검색해 설치할 수 있습니다. 아래 비디오는 퍼블릭 링크를 드롭박스 API로 이전하는 방법을 설명합니다.
 
-(If you are Korean user, see below of english. 한국어 사용자라면 영문 아래쪽의 한글 알림을 보세요.)
+Mytory Markdown for Dropbox 플러그인을 설치한 뒤, 활성화하고 아래 비디오를 보세요.
 
-[Dropbox disabled Public link to basic users from 2017-03-15.](https://www.dropbox.com/help/16)
+(비디오는 위에서 보세요.)
 
-I've promised to update. But I could not meet the deadline. I'm sorry. I was crazy busy from the end of last October. Now I have some time to spare. So I will update the plugin in a week.
+=== Intro ===
 
-I will solve the problem of public link removal in two ways.
+The plugin get markdown file URL like github raw content url. The plugin convert markdown file to html, and put it to post content.
 
-1. Batch change function of the path of the Markdown file: You can change root path of files.
-   e.g. `https://dl.dropboxusercontent.com/u/15546257/blog/markdown/my-post.md` to `https://raw.githubusercontent.com/mytory/mytory-markdown/master/blog/markdown/my-post.md`
-   You can migrate files to github or etc using this feature.
+It also provide text mode that write markdown in post edit page. Markdown text converted to html is put to editor. Text mode don't use url.
 
-1. Dropbox API to reconnect files with batch change function of the path of the Markdown files.
+이 플러그인은 마크다운 파일의 URL을 받아서 html로 변환하고 그걸 포스트 내용으로 집어넣습니다.
+기트허브 원본 내용 URL 같은 것을 활용할 수 있습니다.
 
-I will be updating in a week (3/22).
-
-**I apologize again for not keeping my promise.**
-
-**알림**:
-
-[3월 15일부터 드롭박스는 무료 사용자들에게 퍼블릭 링크 기능을 더이상 제공하지 않습니다.](https://www.dropbox.com/help/16)
-
-그 전에 업데이트할 것이라고 약속을 드린 바 있는데, 기한을 지키지 못했습니다. 매우 죄송합니다. 작년 10월 말부터 미친듯이 바빠서 도무지 여유를 낼 수가 없었습니다. 다행히 이제 여유가 좀 생겼습니다. 일주일 안에 업데이트를 제공하려고 합니다.
-
-두 가지 방법으로 문제를 해결하려고 합니다.
-
-1. 마크다운 파일 경로를 한꺼번에 업데이트하는 기능: 파일의 루트 경로를 변경할 수 있습니다.
-   예를 들면, `https://dl.dropboxusercontent.com/u/15546257/blog/markdown/my-post.md`를 `https://raw.githubusercontent.com/mytory/mytory-markdown/master/blog/markdown/my-post.md`로 바꾸는 식입니다.
-   이 기능을 이용하면 기트허브 등으로 파일을 옮길 수 있을 것입니다.
-
-1. 드롭박스 API를 이용해서 기존의 마크다운 파일을 새로 연결하는 방법입니다. 역시 한꺼번에 연결할 수 있는 기능을 제공할 것입니다.
-
-일주일 안에(3월 22일까지) 업데이트하도록 하겠습니다.
-
-**기한을 맞추지 점, 다시 한 번 사과드립니다.**
-
------
-
-This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
-
-It also provide text mode that write markdown in post edit page. Markdown text converted to html is put to editor by real-time. Text mode don't use url.
+포스트 편집 페이지에서 마크다운 텍스트를 작성하는 방법도 제공합니다. 마크다운 텍스트는 html로 변환돼 에디터에 들어갑니다.
+텍스트 모드를 사용하는 경우 URL은 사용하지 않습니다.
 
 = Features =
 
@@ -74,25 +49,14 @@ It also provide text mode that write markdown in post edit page. Markdown text c
 
 [youtube http://www.youtube.com/watch?v=mCgzB1aCQgM]
 
-* This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content.
-* You can update post **by editing file on your computer with dropbox sync feature.** Or you can update post **by push your content to github**. Of course, you can edit directly from github website.
-* If post was updated once, plugin check only URL server's ETAG not full content. It is for speed. If ETAG was changed, plugin get new content and update post content. Or do nothing.
-* Plugin only pass converted html content to editor. Saving is WordPress's work. So revision history is preserved.
-* Plugin's compatibility is good. Because this plugin updates only post content html. This doesn't touch `the_content` process(vary plugins touch the process).
+* This plugin get markdown file url like github raw content url. It convert markdown file to html, and put it to post content.
+* You can update post **by editing file on your computer**. e.g. **By push your content to github**. Of course, you can edit directly from github website.
+* If post was updated once, plugin check only URL server's ETAG not full content. It is for speed.
+  If ETAG was changed, plugin get new content and update post content. Or do nothing.
+* The plugin only pass converted html content to editor. Saving is WordPress's work. So revision history is preserved.
+* The plugin is compatible with other plugins. Because the plugin updates only post content html. This doesn't touch `the_content` process(vary plugins touch the process).
 * You can use [markdown extra syntax](http://michelf.ca/projects/php-markdown/extra/).
 * It provide markdown editor that can use in post editing page instead of url.
-
-
-= Notice about Dropbox =
-
-This plugin use dropbox 'Public link' not 'Share link'. Currently only Dropbox Pro and Business users may enable Public folders. Below is a example.
-
-- (Public link)[https://dl.dropboxusercontent.com/u/15546257/test.md]
-- (Share link)[https://www.dropbox.com/s/rgin3gbpa5y0505/test.md?dl=0]
-
-If you are Pro and Business user, [visit this page to 'enable public folder'.](https://www.dropbox.com/enable_public_folder)
-
-If you are not, you can use GitHub, instead.
 
 
 = Logic =
@@ -103,7 +67,9 @@ On admin write page, put markdown url path. And click 'update editor' button. So
 
 #### On view page ####
 
-This plugin get file url(Dropbox public link is recommended). And save header's etag to postmeta and converted html to post_content. Next time on request same post, first this plugin olny get dropbox http etag. If changed etag, get dropbox md content and save again, or get html from post_content.
+This plugin get file url(Github raw content url is recommended). And save header's etag to postmeta and converted html to post_content.
+Next time on request same post, first this plugin olny get http etag.
+If changed etag, get md content and save again, or get html from post_content.
 
 = This plugin divide title and content from md file =
 
@@ -115,7 +81,7 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 == Screenshots ==
 
-1. Usage: paste markdown file url. In fact, any markdown file url is accepted. Although it's not Dropbox nor Github, if the file is markdown file, it is acceptable.
+1. Usage: paste markdown file url. In fact, any markdown file url is accepted.
 
 ![](https://mytory.net/uploads/legacy/mytory-markdown/animated.gif)
 
