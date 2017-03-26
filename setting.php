@@ -110,7 +110,7 @@ $is_legacy_php = (phpversion() < '5.3');
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php _e('Markdown Engine', 'mm4d') ?></th>
+                <th scope="row"><?php _e('Markdown Engine', 'mytory-markdown') ?></th>
                 <td>
                     <p>
                         <label>
@@ -127,8 +127,8 @@ $is_legacy_php = (phpversion() < '5.3');
                             echo sprintf(__('Your PHP version is %s, so cannot use Parsedown.'), phpversion());
                             echo '<br>';
                         } ?>
-                        <?php _e('GitHub Flavored.', 'mm4d') ?>
-                        <?php _e('PHP 5.3 or later.', 'mm4d') ?>
+                        <?php _e('GitHub Flavored.', 'mytory-markdown') ?>
+                        <?php _e('PHP 5.3 or later.', 'mytory-markdown') ?>
                         <a target="_blank" href="http://parsedown.org/">Website</a>
                     </p>
 
@@ -149,8 +149,8 @@ $is_legacy_php = (phpversion() < '5.3');
                             echo sprintf(__('Your PHP version is %s, so cannot use ParsedownExtra.'), phpversion());
                             echo '<br>';
                         } ?>
-                        <?php _e('An extension of Parsedown that adds support for Markdown Extra.', 'mm4d') ?>
-                        <?php _e('PHP 5.3 or later.', 'mm4d') ?>
+                        <?php _e('An extension of Parsedown that adds support for Markdown Extra.', 'mytory-markdown') ?>
+                        <?php _e('PHP 5.3 or later.', 'mytory-markdown') ?>
                         <a target="_blank" href="http://parsedown.org/extra/">Website</a>
                     </p>
 
@@ -165,13 +165,13 @@ $is_legacy_php = (phpversion() < '5.3');
                     </p>
 
                     <p class="description">
-                        <?php _e('It works with PHP 4.0.5 or later. <strong>This version is no longer supported since February 1, 2014.</strong>', 'mm4d') ?>
+                        <?php _e('It works with PHP 4.0.5 or later. <strong>This version is no longer supported since February 1, 2014.</strong>', 'mytory-markdown') ?>
                         <a target="_blank" href="https://michelf.ca/projects/php-markdown/extra/">Website</a>
                     </p>
 
                     <hr>
 
-                    <p><?= sprintf(__('Your PHP version is %s', 'mm4d'), phpversion()) ?></p>
+                    <p><?= sprintf(__('Your PHP version is %s', 'mytory-markdown'), phpversion()) ?></p>
 
                 </td>
             </tr>
@@ -189,6 +189,25 @@ $is_legacy_php = (phpversion() < '5.3');
         submit_button();
         ?>
     </form>
+
+    <p>
+        <?php _e('Please let me know about bugs, your ideas, etc!', 'mytory-markdown') ?>
+        <a href="mailto:mail@mytory.net">Email</a>
+        |
+        <a target="_blank" href="https://twitter.com/mytory">Twitter</a>
+        |
+        <a target="_blank" href="https://github.com/mytory/mytory-markdown-for-dropbox/issues">GitHub</a>
+    </p>
+    <p>
+        <a target="_blank" href="https://wordpress.org/support/plugin/mytory-markdown-for-dropbox/reviews/">
+            <?php _e('Please Rate and Review', 'mytory-markdown') ?>
+        </a>
+        |
+        <a target="_blank"
+           href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QUWVEWJ3N7M4W&lc=GA&item_name=Mytory%20Markdown&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted">
+            <?php _e('Donate', 'mytory-markdown') ?>
+        </a>
+    </p>
 </div>
 <script type="text/javascript">
     jQuery('[name=manual_update], [name=auto_update_only_writer_visits]').on('change, click', mm_setting_dependency);

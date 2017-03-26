@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mytory Markdown 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-27 01:57+0900\n"
-"PO-Revision-Date: 2017-03-27 01:58+0900\n"
+"POT-Creation-Date: 2017-03-27 02:04+0900\n"
+"PO-Revision-Date: 2017-03-27 02:05+0900\n"
 "Last-Translator: An, Hyeong-woo <mytory@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko_KR\n"
@@ -116,6 +116,18 @@ msgstr "에디터 내용 갱신"
 #: meta-box.php:34
 msgid "Update"
 msgstr "업데이트"
+
+#: meta-box.php:43 setting.php:194
+msgid "Please let me know about bugs, your ideas, etc!"
+msgstr "버그를 알려 주시거나, 개선 사항을 제안해 주세요."
+
+#: meta-box.php:52 setting.php:203
+msgid "Please Rate and Review"
+msgstr "별점 5개 부탁합니다. 한글 리뷰도 환영!"
+
+#: meta-box.php:57 setting.php:208
+msgid "Donate"
+msgstr "후원하기"
 
 #: setting.php:5
 msgid "Mytory Markdown Setting"

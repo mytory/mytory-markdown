@@ -38,3 +38,22 @@
         </td>
     </tr>
 </table>
+
+<p>
+    <?php _e('Please let me know about bugs, your ideas, etc!', 'mytory-markdown') ?>
+    <a href="mailto:mail@mytory.net">Email</a>
+    |
+    <a target="_blank" href="https://twitter.com/mytory">Twitter</a>
+    |
+    <a target="_blank" href="https://github.com/mytory/mytory-markdown/issues">GitHub</a>
+</p>
+<p>
+    <a target="_blank" href="https://wordpress.org/support/plugin/mytory-markdown/reviews/">
+        <?php _e('Please Rate and Review', 'mytory-markdown') ?>
+    </a>
+    |
+    <a target="_blank"
+       href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QUWVEWJ3N7M4W&lc=GA&item_name=Mytory%20Markdown&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted">
+        <?php _e('Donate', 'mytory-markdown') ?>
+    </a>
+</p>
