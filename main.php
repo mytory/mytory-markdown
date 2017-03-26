@@ -663,10 +663,7 @@ class Mytory_Markdown
     function alertHowToMigrate() {
         ?>
         <div class="notice  notice-warning  is-dismissible">
-            <?php
-            $message = sprintf('<strong>Mytory Markdown: </strong> You can migrate Dropbox Public link to Dropbox API. <a href="%s">See ‘how to’ description.</a>', menu_page_url('mytory-markdown-how-to-migrate', false));
-            ?>
-            <p><?php _e( $message, 'mytory-markdown' ); ?></p>
+            <p><?= sprintf(__( '<strong>Mytory Markdown: </strong> You can migrate Dropbox Public link to Dropbox API. <a href="%s">See ‘how to’ description.</a>', 'mytory-markdown'), menu_page_url('mytory-markdown-how-to-migrate', false)); ?></p>
         </div>
         <?php
     }
