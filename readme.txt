@@ -12,6 +12,20 @@ The plugin get markdown file URL like github raw content url. It convert markdow
 
 == Description ==
 
+The plugin get markdown file URL like github raw content url. The plugin convert markdown file to html, and put it to post content.
+
+It also provide text mode that write markdown in post edit page. Markdown text converted to html is put to editor. Text mode don't use url.
+
+이 플러그인은 마크다운 파일의 URL을 받아서 html로 변환하고 그걸 포스트 내용으로 집어넣습니다.
+기트허브 원본 내용 URL 같은 것을 활용할 수 있습니다.
+
+포스트 편집 페이지에서 마크다운 텍스트를 작성하는 방법도 제공합니다. 마크다운 텍스트는 html로 변환돼 에디터에 들어갑니다.
+텍스트 모드를 사용하는 경우 URL은 사용하지 않습니다.
+
+**[View intro video.](http://youtu.be/mCgzB1aCQgM)**
+
+[youtube http://www.youtube.com/watch?v=mCgzB1aCQgM]
+
 = Now you can migrate from Public link to Dropbox API =
 
 I made up Mytory Markdown for Dropbox plugin. The plugin access Dropbox using API. So I divide the plugin to Mytory Markdown for Dropbox.
@@ -32,23 +46,7 @@ Mytory Markdown for Dropbox 플러그인을 설치한 뒤, 활성화하고 아�
 
 (비디오는 위에서 보세요.)
 
-= Intro =
-
-The plugin get markdown file URL like github raw content url. The plugin convert markdown file to html, and put it to post content.
-
-It also provide text mode that write markdown in post edit page. Markdown text converted to html is put to editor. Text mode don't use url.
-
-이 플러그인은 마크다운 파일의 URL을 받아서 html로 변환하고 그걸 포스트 내용으로 집어넣습니다.
-기트허브 원본 내용 URL 같은 것을 활용할 수 있습니다.
-
-포스트 편집 페이지에서 마크다운 텍스트를 작성하는 방법도 제공합니다. 마크다운 텍스트는 html로 변환돼 에디터에 들어갑니다.
-텍스트 모드를 사용하는 경우 URL은 사용하지 않습니다.
-
 = Features =
-
-**[View intro video.](http://youtu.be/mCgzB1aCQgM)**
-
-[youtube http://www.youtube.com/watch?v=mCgzB1aCQgM]
 
 * This plugin get markdown file url like github raw content url. It convert markdown file to html, and put it to post content.
 * You can update post **by editing file on your computer**. e.g. **By push your content to github**. Of course, you can edit directly from github website.
@@ -82,10 +80,9 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 == Screenshots ==
 
-1. Usage: paste markdown file url. In fact, any markdown file url is accepted.
-2. GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.
-3. GitHub Usage 2: And click 'Raw' button on your markdown file page like below.
-4. GitHub Usage 3: Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site. Last, click 'Update Editor Content' button.
+1. GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.
+2. GitHub Usage 2: And click 'Raw' button on your markdown file page like below.
+3. GitHub Usage 3: Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site. Last, click 'Update Editor Content' button.
 
 == Installation ==
 
