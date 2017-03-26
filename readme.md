@@ -13,7 +13,7 @@
 ## Description 
 
 
-# Now you can migrate from Public link to Dropbox API
+### Now you can migrate from Public link to Dropbox API 
 
 I made up Mytory Markdown for Dropbox plugin. The plugin access Dropbox using API. So I divide the plugin to Mytory Markdown for Dropbox.
 Now you can install it in plugin page. This video describe how to migrate Public link to Dropbox API.
@@ -25,7 +25,7 @@ Install Mytory Markdown for Dropbox and activate it. Then see a video below.
 If the video doesn't be show, [click this to go to how to migration video](https://www.youtube.com/watch?v=ZmPWMBvGuS4&).
 
 
-# 이제 Public 링크를 드롭박스 API로 이전할 수 있습니다
+### 이제 Public 링크를 드롭박스 API로 이전할 수 있습니다 
 
 Mytory Markdown for Dropbox 플러그인을 만들었습니다. API를 이용해서 드롭박스에 접속하는 플러그인입니다. 별도로 만들었습니다.
 지금 플러그인 페이지에서 검색해 설치할 수 있습니다. 아래 비디오는 퍼블릭 링크를 드롭박스 API로 이전하는 방법을 설명합니다.
@@ -35,7 +35,7 @@ Mytory Markdown for Dropbox 플러그인을 설치한 뒤, 활성화하고 아�
 (비디오는 위에서 보세요.)
 
 
-# Intro 
+### Intro 
 
 The plugin get markdown file URL like github raw content url. The plugin convert markdown file to html, and put it to post content.
 
@@ -90,28 +90,17 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 ## Screenshots 
 
 ### 1. Usage: paste markdown file url. In fact, any markdown file url is accepted.
-![Usage: paste markdown file url. In fact, any markdown file url is accepted.](https://ps.w.org/mytory-markdown/assets/screenshot-1.gif)
-
-
-![](https://mytory.net/uploads/legacy/mytory-markdown/animated.gif)
+[missing image]
 
 ### 2. GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.
 ![GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.](https://ps.w.org/mytory-markdown/assets/screenshot-2.jpg)
 
-
-![](https://mytory.net/uploads/legacy/mytory-markdown/mytory-markdown-github-1.jpg)
-
 ### 3. GitHub Usage 2: And click 'Raw' button on your markdown file page like below.
 ![GitHub Usage 2: And click 'Raw' button on your markdown file page like below.](https://ps.w.org/mytory-markdown/assets/screenshot-3.jpg)
-
-
-![](https://mytory.net/uploads/legacy/mytory-markdown/mytory-markdown-github-2.jpg)
 
 ### 4. GitHub Usage 3: Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site. Last, click 'Update Editor Content' button.
 ![GitHub Usage 3: Next, copy URL and paste it to markdown file path on 'add new post' page in your wordpress site. Last, click 'Update Editor Content' button.](https://ps.w.org/mytory-markdown/assets/screenshot-4.jpg)
 
-
-![](https://mytory.net/uploads/legacy/mytory-markdown/mytory-markdown-github-3.jpg)
 
 
 ## Installation 
