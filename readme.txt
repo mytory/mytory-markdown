@@ -22,9 +22,9 @@ It also provide text mode that write markdown in post edit page. Markdown text c
 포스트 편집 페이지에서 마크다운 텍스트를 작성하는 방법도 제공합니다. 마크다운 텍스트는 html로 변환돼 에디터에 들어갑니다.
 텍스트 모드를 사용하는 경우 URL은 사용하지 않습니다.
 
-**[View intro video.](http://youtu.be/mCgzB1aCQgM)**
+**[See intro video.](https://www.youtube.com/watch?v=wKcrIvlGVfo)**
 
-[youtube http://www.youtube.com/watch?v=mCgzB1aCQgM]
+[youtube https://www.youtube.com/watch?v=wKcrIvlGVfo]
 
 = Now you can migrate from Public link to Dropbox API =
 
@@ -35,7 +35,7 @@ Install Mytory Markdown for Dropbox and activate it. Then see a video below.
 
 [Youtube https://www.youtube.com/watch?v=ZmPWMBvGuS4]
 
-If the video doesn't be show, [click this to go to how to migration video](https://www.youtube.com/watch?v=ZmPWMBvGuS4&).
+If the video doesn't be show, [click this to go to how to migration video](https://www.youtube.com/watch?v=ZmPWMBvGuS4).
 
 = 이제 Public 링크를 드롭박스 API로 이전할 수 있습니다 =
 
