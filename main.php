@@ -2,9 +2,9 @@
 
 /*
 Plugin Name: Mytory Markdown
-Description: This plugin get markdown file path on dropbox public link or github raw content url. It convert markdown file to html, and put it to post content. It also provide real-time conversion editor. This feature don't need dropbox url. You can directly write markdown in editing page and see real-time conversion.
+Description: The plugin get markdown file URL like github raw content url. It convert markdown file to html, and put it to post content. You can directly write markdown in editing page.
 Author: mytory
-Version: 1.6.0
+Version: 1.6.1
 Author URI: http://mytory.net
 */
 
@@ -19,6 +19,7 @@ class Mytory_Markdown
     protected $post;
     protected $worked;
     protected $debug_msg = array();
+    public $markdown;
 
     function __construct()
     {
@@ -41,6 +42,8 @@ class Mytory_Markdown
         add_action('admin_menu', array(&$this, 'add_menu'));
         add_action('admin_init', array(&$this, 'register_settings'));
         add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
+
+        $this->initMarkdownObject();
     }
 
     function enqueue_scripts($hook)
@@ -349,6 +352,7 @@ class Mytory_Markdown
         curl_setopt($curl, CURLOPT_NOBODY, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
         if (!ini_get('open_basedir')) {
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         }
@@ -372,6 +376,7 @@ class Mytory_Markdown
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_NOBODY, false);
+        curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
         if (!ini_get('open_basedir')) {
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         }
@@ -495,6 +500,7 @@ class Mytory_Markdown
         register_setting('mytory-markdown-option-group', 'auto_update_per');
         register_setting('mytory-markdown-option-group', 'debug_msg');
         register_setting('mytory-markdown-option-group', 'manual_update');
+        register_setting('mytory-markdown-option-group', 'mytory_markdown_engine');
     }
 
     function add_menu()
@@ -611,22 +617,43 @@ class Mytory_Markdown
      */
     private function _convert_md_to_post($md_content)
     {
-        if (!function_exists('Markdown')) {
-            include_once 'markdown.php';
-        }
-
-        $content = Markdown($md_content);
+        $content = $this->markdown->convert($md_content);
         $post = array();
         $matches = array();
         preg_match('/<h1>(.*)<\/h1>/', $content, $matches);
         if (!empty($matches)) {
             $post['post_title'] = $matches[1];
         } else {
-            $post['post_title'] = false;
+            $post['post_title'] = '';
         }
         $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content, 1);
         return $post;
     }
-}
+
+    private function initMarkdownObject()
+    {
+        if (!get_option('mytory_markdown_engine')) {
+            update_option('mytory_markdown_engine', 'markdownExtra');
+        }
+
+        switch (get_option('mytory_markdown_engine')) {
+            case 'parsedown':
+                include 'MMParsedown.php';
+                $this->markdown = new MMParsedown;
+                break;
+            case 'parsedownExtra':
+                include 'MMParsedownExtra.php';
+                $this->markdown = new MMParsedownExtra;
+                break;
+            case 'markdownExtra':
+                include 'MMMarkdownExtra.php';
+                $this->markdown = new MMMarkdownExtra;
+                break;
+            default:
+                include 'MMMarkdownExtra.php';
+                $this->markdown = new MMMarkdownExtra;
+            // pass through
+        }
+    }}
 
 $mytory_markdown = new Mytory_Markdown;

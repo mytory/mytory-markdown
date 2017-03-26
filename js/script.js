@@ -71,7 +71,6 @@ jQuery(function ($) {
             action: 'mytory_md_convert_in_text_mode',
             content: content
         }, function (obj) {
-            console.log('in function', obj);
             mytory_markdown_set_content(obj);
         }, 'json');
     }

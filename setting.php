@@ -1,3 +1,6 @@
+<?php
+$is_legacy_php = (phpversion() < '5.3');
+?>
 <div class="wrap">
     <h2><?php _e('Mytory Markdown Setting', 'mytory-markdown') ?></h2>
 
@@ -104,6 +107,72 @@
 
                     <p class="description"><?php _e("Of course, it doesn't be showed normal users.",
                             'mytory-markdown') ?></p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><?php _e('Markdown Engine', 'mm4d') ?></th>
+                <td>
+                    <p>
+                        <label>
+                            <input type="radio" name="mytory_markdown_engine" value="parsedown"
+                                <?= (get_option('mytory_markdown_engine') == 'parsedown') ? 'checked' : '' ?>
+                                <?= $is_legacy_php ? 'disabled' : '' ?>>
+                            Parsedown
+                        </label>
+                    </p>
+
+                    <p class="description">
+                        <?php
+                        if ($is_legacy_php) {
+                            echo sprintf(__('Your PHP version is %s, so cannot use Parsedown.'), phpversion());
+                            echo '<br>';
+                        } ?>
+                        <?php _e('GitHub Flavored.', 'mm4d') ?>
+                        <?php _e('PHP 5.3 or later.', 'mm4d') ?>
+                        <a target="_blank" href="http://parsedown.org/">Website</a>
+                    </p>
+
+                    <hr>
+
+                    <p>
+                        <label>
+                            <input type="radio" name="mytory_markdown_engine" value="parsedownExtra"
+                                <?= (get_option('mytory_markdown_engine') == 'parsedownExtra') ? 'checked' : '' ?>
+                                <?= $is_legacy_php ? 'disabled' : '' ?>>
+                            ParsedownExtra
+                        </label>
+                    </p>
+
+                    <p class="description">
+                        <?php
+                        if ($is_legacy_php) {
+                            echo sprintf(__('Your PHP version is %s, so cannot use ParsedownExtra.'), phpversion());
+                            echo '<br>';
+                        } ?>
+                        <?php _e('An extension of Parsedown that adds support for Markdown Extra.', 'mm4d') ?>
+                        <?php _e('PHP 5.3 or later.', 'mm4d') ?>
+                        <a target="_blank" href="http://parsedown.org/extra/">Website</a>
+                    </p>
+
+                    <hr>
+
+                    <p>
+                        <label>
+                            <input type="radio" name="mytory_markdown_engine" value="markdownExtra"
+                                <?= (get_option('mytory_markdown_engine') == 'markdownExtra') ? 'checked' : '' ?>>
+                            php Markdown Extra classic version
+                        </label>
+                    </p>
+
+                    <p class="description">
+                        <?php _e('It works with PHP 4.0.5 or later. <strong>This version is no longer supported since February 1, 2014.</strong>', 'mm4d') ?>
+                        <a target="_blank" href="https://michelf.ca/projects/php-markdown/extra/">Website</a>
+                    </p>
+
+                    <hr>
+
+                    <p><?= sprintf(__('Your PHP version is %s', 'mm4d'), phpversion()) ?></p>
+
                 </td>
             </tr>
         </table>

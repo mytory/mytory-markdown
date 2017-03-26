@@ -8,6 +8,7 @@ Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+The plugin get markdown file URL like github raw content url. It convert markdown file to html, and put it to post content. You can directly write markdown in editing page.
 
 == Description ==
 
