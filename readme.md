@@ -1,6 +1,6 @@
 # Mytory Markdown 
 **Contributors:** mytory  
-**Donate link:** http://mytory.net/paypal-donation  
+**Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QUWVEWJ3N7M4W&lc=GA&item_name=Mytory%20Markdown&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted  
 **Tags:** markdown, md, github, markdown editor  
 **Tested up to:** 4.7.3  
 **Requires at least:** null  
@@ -8,6 +8,7 @@
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
+The plugin get markdown file URL like github raw content url. It convert markdown file to html, and put it to post content. You can directly write markdown in editing page.
 
 
 ## Description 
@@ -90,7 +91,7 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 ## Screenshots 
 
 ### 1. Usage: paste markdown file url. In fact, any markdown file url is accepted.
-[missing image]
+![Usage: paste markdown file url. In fact, any markdown file url is accepted.](https://ps.w.org/mytory-markdown/assets/screenshot-1.gif)
 
 ### 2. GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.
 ![GitHub Usage 1: Create markdown file, and push it to github. So you can see it your github repository. Click it.](https://ps.w.org/mytory-markdown/assets/screenshot-2.jpg)
@@ -112,7 +113,18 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 ## Changelog 
 
 
-### 1.6.0
+### 1.6.1 
+
+* Now you can migrate from Public link to Dropbox API. If you have Dropbox Public link in markdown path,
+  you are going to see manual alert message and go to manual page.
+  ((How to Migrate video)[https://www.youtube.com/watch?v=ZmPWMBvGuS4])
+* Support parsedown and parsedownExtra engine. Select on settings page.
+* 이제 드롭박스 퍼블릭 링크에서 드롭박스 API로 이전할 수 있습니다. 만약 마크다운 경로에 드롭박스 퍼블릭 링크가 있으면,
+  이전 설명 알림과 페이지를 보게 될 것입니다.
+  ((이전 방법 설명 동영상(한글 자막 있음))[https://www.youtube.com/watch?v=ZmPWMBvGuS4]))
+
+
+### 1.6.0 
 
 * Now, you can use url batch replace feature. Go to **Settings > Mytory Markdown: URL Batch Replace**.
 * Dropbox API feature will be provided later.
