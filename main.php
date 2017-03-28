@@ -163,7 +163,6 @@ class Mytory_Markdown
             $this->debug_msg[] = "This don't has markdown path. So don't work.";
             return null;
         }
-        $markdown_path = str_replace('https://', 'http://', $markdown_path);
 
         if ($this->needToUpdate($markdown_path)) {
 
