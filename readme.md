@@ -3,8 +3,7 @@
 **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QUWVEWJ3N7M4W&lc=GA&item_name=Mytory%20Markdown&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted  
 **Tags:** markdown, md, github, markdown editor  
 **Tested up to:** 4.7.3  
-**Requires at least:** null  
-**Stable tag:** 1.6.1  
+**Stable tag:** 1.6.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -105,6 +104,16 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 
 
 ## Changelog 
+
+
+### 1.6.2 
+
+* Although you don't save after click 'update editor content' button on post edit screen, an etag is updated. It's a bug. Fixed.
+* Remove a code line that force to replace https with http.
+* Request not to response cached version.
+* 에디터 내용 갱신 버튼을 누른 뒤 저장하지 않아도, etag는 갱신된 채 저장해서 다시 내용이 갱신되지 않는 버그 수정.
+* 무조건 http로 접속하게 했던 코드 삭제.
+* 서버에 캐시를 사용하지 말라고 요청.
 
 
 ### 1.6.1 
