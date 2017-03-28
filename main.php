@@ -165,9 +165,8 @@ class Mytory_Markdown
         }
         $markdown_path = str_replace('https://', 'http://', $markdown_path);
 
-        if ($this->_need_to_save($markdown_path)) {
+        if ($this->needToUpdate($markdown_path)) {
 
-            update_post_meta($this->post->ID, '_mytory_markdown_etag', $this->_get_etag($markdown_path));
             $md_post = $this->_get_post($markdown_path);
 
             if ($this->error['status'] === true) {
@@ -182,7 +181,9 @@ class Mytory_Markdown
                     'post_title' => $md_post['post_title'],
                     'post_content' => $md_post['post_content'],
                 );
-                wp_update_post($postarr);
+                if (wp_update_post($postarr)) {
+                    update_post_meta($this->post->ID, '_mytory_markdown_etag', $this->getEtag($markdown_path));
+                }
             }
         } else {
             $this->debug_msg[] = "Etag was not changed. So content has not been updated.";
@@ -239,7 +240,7 @@ class Mytory_Markdown
 
         $md_path = $_REQUEST['md_path'];
 
-        $etag_new = $this->_get_etag($md_path);
+        $etag_new = $this->getEtag($md_path);
 
         if (!$etag_new) {
             $res = array(
@@ -253,11 +254,10 @@ class Mytory_Markdown
             die();
         }
 
-        update_post_meta($_REQUEST['post_id'], '_mytory_markdown_etag', $etag_new);
-
         $md_post = $this->_get_post($md_path);
 
         if (!$md_post) {
+            // 에러
             $res = array(
                 'error' => true,
                 'error_msg' => $this->error['msg'],
@@ -266,10 +266,12 @@ class Mytory_Markdown
             );
         } else {
             $res = array(
+                // 성공
                 'error' => false,
                 'error_msg' => '',
                 'post_title' => $md_post['post_title'],
                 'post_content' => $md_post['post_content'],
+                'etag' => $etag_new,
             );
         }
         echo json_encode($res);
@@ -278,11 +280,11 @@ class Mytory_Markdown
 
     /**
      * This function use etag in http header.
-     * If etag change, need new save.
+     * If etag change, need to update.
      * @param  string $url
      * @return boolean
      */
-    private function _need_to_save($url)
+    private function needToUpdate($url)
     {
         $post = $this->post;
 
@@ -297,9 +299,11 @@ class Mytory_Markdown
         $etag_saved = get_post_meta($post->ID, '_mytory_markdown_etag', true);
 
         if ($etag_saved) {
-            $etag_remote = $this->_get_etag($url);
+            // If the post has etag saved, determine.
+            // If the post hasn't etag saved, need to save.
+            $etag_remote = $this->getEtag($url);
 
-            // if there is not etag, don't need to save.
+            // if remote has not an etag, don't need to save.
             if ($etag_remote === null) {
                 return false;
             }
@@ -317,7 +321,7 @@ class Mytory_Markdown
      * @param  string $url
      * @return string
      */
-    private function _get_etag($url)
+    private function getEtag($url)
     {
         $header = $this->_get_header_from_url($url);
         $header = $this->_http_parse_headers($header);
@@ -475,6 +479,7 @@ class Mytory_Markdown
             $md_path = get_post_meta($_GET['post'], 'mytory_md_path', true);
             $md_mode = get_post_meta($_GET['post'], 'mytory_md_mode', true);
             $md_text = get_post_meta($_GET['post'], 'mytory_md_text', true);
+            $md_etag = get_post_meta($_GET['post'], '_mytory_markdown_etag', true);
         }
         include 'meta-box.php';
     }
@@ -490,6 +495,7 @@ class Mytory_Markdown
             update_post_meta($post_id, 'mytory_md_path', $_POST['mytory_md_path']);
             update_post_meta($post_id, 'mytory_md_text', $_POST['mytory_md_text']);
             update_post_meta($post_id, 'mytory_md_mode', $_POST['mytory_md_mode']);
+            update_post_meta($post_id, '_mytory_markdown_etag', $_POST['_mytory_markdown_etag']);
         }
     }
 
@@ -674,7 +680,7 @@ class Mytory_Markdown
         $results = $wpdb->get_results("select count(*) count from {$wpdb->prefix}postmeta where meta_value like '%dropboxusercontent%' and meta_key = 'mytory_md_path' limit 1");
         if ($results[0]->count > 0) {
             $this->hasDropboxPublicLink = true;
-            if ($_GET['page'] != 'mytory-markdown-how-to-migrate') {
+            if (!empty($_GET['page']) and $_GET['page'] != 'mytory-markdown-how-to-migrate') {
                 add_action('admin_notices', array(&$this, 'alertHowToMigrate'));
             }
             add_action('admin_menu', array(&$this, 'addMenuHowToMigrate'));

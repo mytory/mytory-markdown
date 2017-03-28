@@ -18,6 +18,7 @@
             <input type="url" name="mytory_md_path" id="mytory-md-path" class="large-text"
                    title="<?php esc_attr_e(__("You can use any URL in addition to Github.", 'mytory-markdown')) ?>"
                    value="<?php echo $md_path ?>">
+            <input type="hidden" name="_mytory_markdown_etag" title="etag" value="<?= esc_attr($md_etag) ?>">
         </td>
     </tr>
     <tr class="js-mode  js-mode--text  hidden">

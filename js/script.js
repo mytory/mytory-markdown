@@ -55,7 +55,7 @@ jQuery(function ($) {
             // text mode
             $('#content').val(obj.post_content);
         } else {
-
+            $('[name="_mytory_markdown_etag"]').val(obj.etag);
             // wysiwyg mode
             if (tinymce.getInstanceById) {
                 tinymce.getInstanceById('content').setContent(obj.post_content);
