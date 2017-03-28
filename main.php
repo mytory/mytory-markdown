@@ -357,8 +357,8 @@ class Mytory_Markdown
         curl_setopt($curl, CURLOPT_HEADER, true);
         curl_setopt($curl, CURLOPT_NOBODY, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Cache-Control: no-cache'));
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
         if (!ini_get('open_basedir')) {
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         }
@@ -382,7 +382,7 @@ class Mytory_Markdown
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_NOBODY, false);
-        curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Cache-Control: no-cache'));
         if (!ini_get('open_basedir')) {
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         }
@@ -475,6 +475,7 @@ class Mytory_Markdown
         $md_path = '';
         $md_mode = 'url';
         $md_text = '';
+        $md_etag = '';
         if (isset($_GET['post'])) {
             $md_path = get_post_meta($_GET['post'], 'mytory_md_path', true);
             $md_mode = get_post_meta($_GET['post'], 'mytory_md_mode', true);
