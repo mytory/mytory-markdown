@@ -132,12 +132,6 @@ class Mytory_Markdown
             }
         }
 
-        if (!is_single() and !is_page()) {
-            // single이 아닌 경우
-            $this->debug_msg[] = "This is not single page. So don't work.";
-            return null;
-        }
-
         // 'Auto update per x visits' feature work only when 'Auto update only writer visits' feature disabled.
         if ($auto_update_only_writer_visits != 'y') {
 
@@ -287,11 +281,7 @@ class Mytory_Markdown
     {
         $post = $this->post;
 
-        // If not single page, don't connect for prevent time-wasting.
-        // return FALSE that means 'no need to save' to print HTML that is saved.
-        // 싱글 페이지가 아니라면 굳이 접속해서 시간낭비할 거 없이 
-        // 바로 저장된 HTML을 뿌려줄 수 있도록 save할 필요 없다고 신호를 준다.
-        if (!is_single() AND !is_page()) {
+        if (empty($post)) {
             return false;
         }
 
