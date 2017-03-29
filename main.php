@@ -536,7 +536,7 @@ class Mytory_Markdown
 
     function get_posts_has_md_path()
     {
-        $wp_query = new WP_Query(array(
+        $the_query = new WP_Query(array(
             'posts_per_page' => -1,
             'meta_query' => array(
                 array(
@@ -546,7 +546,7 @@ class Mytory_Markdown
                 ),
             ),
         ));
-        return $wp_query->posts;
+        return $the_query->posts;
     }
 
     function print_batch_update_page()

@@ -65,7 +65,7 @@
             <input type="submit" name="submit" id="submit" class="button button-primary"
                    value="<?php _e('Convert', 'mytory-markdown') ?>">
             <?php
-            $wp_query = new WP_Query(array(
+            $the_query = new WP_Query(array(
                 'meta_query' => array(
                     array(
                         'key' => 'mytory_md_path_old',
@@ -74,7 +74,7 @@
                     ),
                 ),
             ));
-            if ($wp_query->post_count > 0) { ?>
+            if ($the_query->post_count > 0) { ?>
                 <a title="<?php _e('Only one step can be undo.', 'mytory-markdown') ?>" style="float: right;"
                    onclick="return confirm('<?php _e('Really?', 'mytory-markdown') ?>');"
                    class="trash"
