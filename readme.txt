@@ -3,7 +3,7 @@ Contributors: mytory
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QUWVEWJ3N7M4W&lc=GA&item_name=Mytory%20Markdown&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: markdown, md, github, markdown editor
 Tested up to: 4.7.3
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,11 @@ If markdown file has `h1` this plugin puts first `h1` string to post_title. Of c
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.6.3 =
+
+* 다른 플러그인이 `is_single()` 함수를 무력화하는 경우가 발생한 듯하여 `is_single()`을 사용하지 않도록 수정.
+* Remove `is_single()` function usage. Maybe other plugin has disturbed the function's process.
 
 = 1.6.2 =
 
