@@ -4,13 +4,13 @@
 Plugin Name: Mytory Markdown
 Description: The plugin get markdown file URL like github raw content url. It convert markdown file to html, and put it to post content. You can directly write markdown in editing page.
 Author: mytory
-Version: 1.6.3
+Version: 1.6.4
 Author URI: https://mytory.net
 */
 
 class Mytory_Markdown
 {
-    public $version = '1.6.0';
+    public $version = '1.6.4';
     protected $error = array(
         'status' => false,
         'msg' => '',
