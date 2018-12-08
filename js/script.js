@@ -1,5 +1,12 @@
 jQuery(function ($) {
 
+    if (!document.querySelector('#title')) {
+        document.querySelector('#mytory-markdown-path .inside')
+            .innerHTML = '<p><i>Mytory Markdown</i> is not yet support Gutenberg Editor. ' +
+            'Please use <a href="https://wordpress.org/plugins/classic-editor/">Classic Editor</a> ' +
+            'before support that.</p>';
+    }
+
     $('.js-mode-button').click(function () {
         var mode = $(this).val();
         $('.js-mode').addClass('hidden');
