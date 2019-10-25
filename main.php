@@ -4,13 +4,13 @@
 Plugin Name: Mytory Markdown
 Description: The plugin get markdown file URL like github raw content url. It convert markdown file to html, and put it to post content. You can directly write markdown in editing page.
 Author: mytory
-Version: 1.6.4
+Version: 1.6.5
 Author URI: https://mytory.net
 */
 
 class Mytory_Markdown
 {
-    public $version = '1.6.4';
+    public $version = '1.6.5';
     protected $error = array(
         'status' => false,
         'msg' => '',
@@ -622,13 +622,13 @@ class Mytory_Markdown
         $content = $this->markdown->convert($md_content);
         $post = array();
         $matches = array();
-        preg_match('/<h1>(.*)<\/h1>/', $content, $matches);
+	    preg_match('/<h1[^>]*>(.*)<\/h1>/', $content, $matches);
         if (!empty($matches)) {
             $post['post_title'] = $matches[1];
         } else {
             $post['post_title'] = '';
         }
-        $post['post_content'] = preg_replace('/<h1>(.*)<\/h1>/', '', $content, 1);
+        $post['post_content'] = preg_replace('/<h1[^>]*>(.*)<\/h1>/', '', $content, 1);
         return $post;
     }
 
@@ -650,6 +650,10 @@ class Mytory_Markdown
             case 'markdownExtra':
                 include 'MMMarkdownExtra.php';
                 $this->markdown = new MMMarkdownExtra;
+                break;
+            case 'multimarkdown':
+                include 'MMMultimarkdown.php';
+                $this->markdown = new MMMultimarkdown;
                 break;
             default:
                 include 'MMMarkdownExtra.php';
@@ -694,6 +698,15 @@ class Mytory_Markdown
     {
         include 'how-to-migrate.php';
     }
+
+	public function hasMultimarkdownExecution()
+	{
+		if (defined('MYTORY_MARKDOWN_MULTIMARKDOWN_EXECUTION')) {
+			return true;
+		}
+
+		return !!`which multimarkdown`;
+	}
 }
 
 $mytory_markdown = new Mytory_Markdown;

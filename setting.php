@@ -1,4 +1,5 @@
 <?php
+global $mytory_markdown;
 $is_legacy_php = (phpversion() < '5.3');
 ?>
 <div class="wrap">
@@ -168,6 +169,55 @@ $is_legacy_php = (phpversion() < '5.3');
                         <?php _e('It works with PHP 4.0.5 or later. <strong>This version is no longer supported since February 1, 2014.</strong>', 'mytory-markdown') ?>
                         <a target="_blank" href="https://michelf.ca/projects/php-markdown/extra/">Website</a>
                     </p>
+
+                    <hr>
+
+	                <?php if ( $mytory_markdown->hasMultimarkdownExecution() ) { ?>
+                        <p>
+                            <label>
+                                <input type="radio" name="mytory_markdown_engine" value="multimarkdown"
+					                <?= ( get_option( 'mytory_markdown_engine' ) == 'multimarkdown' ) ? 'checked' : '' ?>>
+                                Multimarkdown 6
+                            </label>
+                        </p>
+
+                        <p class="description">
+                            Lightweight markup processor to produce HTML, LaTeX, and more.
+                            <a href="https://fletcher.github.io/MultiMarkdown-6/">Website</a>
+                            <br>
+                            It's not a PHP library. So you must have the Multimarkdown commandline execution on your
+                            server.
+                        </p>
+
+	                <?php } else { ?>
+
+                        <p>
+                            <label>
+                                <input type="radio" name="mytory_markdown_engine" value="multimarkdown" disabled>
+                                Multimarkdown 6
+                            </label>
+                        </p>
+
+                        <p class="description">
+			                <?php _e( 'You can use the Muitimarkdown if you install it on your server.' ) ?>
+                            (<a href="https://fletcher.github.io/MultiMarkdown-6/">Website</a>)
+                        </p>
+                        <ol>
+                            <li>
+                                <p class="description">
+					                <?php _e( 'Multimarkdown option will be enabled if a <code>multimarkdown</code> execution is on OS PATH and web server can run it.' ) ?>
+                                </p>
+                            </li>
+                            <li>
+                                <p class="description">
+					                <?php _e( 'Otherwise, you can define <code>MYTORY_MARKDOWN_MULTIMARKDOWN_EXECUTION</code> constant on <code>wp-config.php</code>.' ) ?>
+                                    <br>
+					                <?php _e( "ex) <code>define('MYTORY_MARKDOWN_MULTIMARKDOWN_EXECUTION', '/opt/multimarkdown/bin/multimarkdown');</code>" ) ?>
+                                </p>
+                            </li>
+                        </ol>
+
+	                <?php } ?>
 
                     <hr>
 
